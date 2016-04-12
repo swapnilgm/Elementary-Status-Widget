@@ -39,7 +39,7 @@ class Elm.Status(Elm.Layout)
 		      get {
 			      [[get the current mood of person]]
 			      }
-			      values { 
+			      values {
 				mood: MOOD;
 			      }
 	      }

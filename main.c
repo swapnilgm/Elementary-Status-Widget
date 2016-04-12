@@ -4,19 +4,15 @@
 #include "elm_status.eo.h"
 
 
-	static void
-_status_changed_cb(void *data, Evas_Object *obj,void *event_info)
+static void _status_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	printf("status changed callback\n");
 }
-	
-	static void
-_mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
+
+static void _mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	printf("mood changed callback\n");
 }
-
-
 
 int main(int argc, char **argv)
 {

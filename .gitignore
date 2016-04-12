@@ -1,10 +1,7 @@
-CMakeFiles
-CMakeCache.txt
-*.cmake
 *~
 *.swp
-Makefile
-status.eo.h
-status.eo.c
-status
+elm_status.eo.h
+elm_status.eo.c
 *.edj
+build
+tags
