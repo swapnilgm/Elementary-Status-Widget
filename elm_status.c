@@ -23,7 +23,7 @@ typedef struct
 	VISIBILITY visibility;
 	char * picture;
 	Evas_Object* status_entry;
-	Evas_Object* icon;
+	Evas_Object* image;
 } Elm_Status_Data;
 
 static const char SIG_CLICKED[] = "clicked";
@@ -64,19 +64,31 @@ _elm_status_eo_base_destructor(Eo *obj, Elm_Status_Data *pd)
 	EOLIAN static void
 _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 {
+	//add smart object in widget hierarchy
 	evas_obj_smart_add(eo_super(obj, ELM_STATUS_CLASS));
-
+// This function adds obj as a sub object of parent.
+// This must be added to have widget heirarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
-
-	if(!elm_layout_theme_set(obj, "status", "base",
-				elm_widget_style_get(obj)))
-		printf("Failed to set layout!\n");
+	 //Since we are deriving from Elm.widget, 
+	// our resize object is actually null. we actually don;t use it. 
+	// But now we are deriving from Elm.layout
+	// add object as a resize object for the window (controls window minimum
+	// size as well as gets resized if window is resized)
 	printf("wd->resize_obj %p\n", wd->resize_obj);
+	//set the layout to "base" grouping from "statdus.edj"
+	if(!elm_layout_theme_set(obj, "status", "base",	elm_widget_style_get(obj)))
+		printf("Failed to set layout!\n");
+	else
+		EINA_LOG_DBG("Layout theme set to base.");
 
-	pd->icon = elm_icon_add(obj);
-	elm_icon_file_set(obj, "open_mouth.jpg",NULL);
-	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
+	//use icon widget to 
+	pd->image = elm_image_add(obj);
+	if(!elm_image_file_set(obj, "open_mouth.jpg",NULL))
+		EINA_LOG_WARN("Could not load default image");
+	else
+		EINA_LOG_DBG("Image Loaded successfully.");
+	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->image);
 
 	/*   evas_object_size_hint_align_set(pd->btn, EVAS_HINT_FILL,
 	     EVAS_HINT_FILL);
@@ -90,7 +102,7 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 _elm_status_evas_object_smart_del(Eo *obj, Elm_Status_Data *pd)
 {
 	//evas_obj_smart_add(eo_super(obj, ELM_STATUS_CLASS));
-//	ELM_SAFE_FREE(pd->icon, evas_object_del);
+//	ELM_SAFE_FREE(pd->image, evas_object_del);
 //	eo_do_super(obj, ELM_STATUS_CLASS, evas_object_del);
 
 }
@@ -184,10 +196,10 @@ _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, char *picture)
 {
 	if (picture)
 	{
-		if(elm_icon_file_set(obj, picture,NULL))
+		EINA_LOG_INFO("Valid picture url found.");
+		if(!elm_image_file_set(obj, picture, NULL))
 		{
-			EINA_LOG_WARN("could not set the text. "
-					"Maybe part 'elm.picture.text' does not exist?");
+			EINA_LOG_WARN("could not set the image." );
 		}
 		else 
 			pd->picture = picture;
