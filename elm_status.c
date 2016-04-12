@@ -84,7 +84,10 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 
 	//use icon widget to 
 	pd->image = elm_image_add(obj);
-	if(!elm_image_file_set(obj, "open_mouth.jpg",NULL))
+	char buf[250];
+	snprintf(buf, sizeof(buf), "%s/images/plant_01.jpg", elm_app_data_dir_get();
+	CRI(buf);
+	if(!elm_image_file_set(obj, "Start_IT.png",NULL))
 		EINA_LOG_WARN("Could not load default image");
 	else
 		EINA_LOG_DBG("Image Loaded successfully.");

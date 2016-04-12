@@ -4,6 +4,8 @@ CMakeCache.txt
 *~
 *.swp
 Makefile
-status.eo.h
-status.eo.c
+elm_status.eo.h
+elm_status.eo.c
 status
+*.jpg
+*.png
