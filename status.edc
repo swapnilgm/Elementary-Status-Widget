@@ -1,21 +1,181 @@
 collections {
-     group { name: "elm/status/base/default";
-          parts {
-               part { name: "Rect";
-                     type: RECT;
-                    description { state: "default" 0.0;
-                        color: 255 0 0 255;
-                    }
-               }
-               part { name: "elm.text";
-                     type: TEXT;
-                    description { state: "default" 0.0;
-                        color: 255 255 255 255;
-                        text { font: FN; size: 10;
-                           min: 1 1;
-                         }
-                    }
-               }
-          }
+     group { 
+		name: "elm/status/base/default";
+		parts {
+			part { 
+				name: "elm.picture.rect";
+				type: RECT;
+                    		description { 
+					state: "default" 0.0;
+		                        color: 255 0 0 255;
+					rel2 {
+						relative : 0.5 1;
+					}
+				}
+				part { 
+				 	name: "elm.picture.image";
+					type: SWALLOW;
+					description {
+						state: "default" 0.0;
+						color: 255 255 255 255;
+					}
+				}
+			}
+			
+			part { 
+				name: "elm.status.rect";
+				type: RECT;
+                    		description { 
+					state: "default" 0.0;
+		                        color: 0 255 0 255;
+					rel1 {
+						relative : 0.5 0;
+					}
+					rel2 {
+						relative : 1 0.40;
+					}
+				}
+				part { 
+					name: "elm.status.label.rect";
+					type: RECT;
+					description { 
+						state: "default" 0.0;
+						color: 0 130 0 255;
+						rel2 {
+								relative : 0.5 0;
+							}
+
+					}
+					part { 
+				 		name: "elm.status.label.text";
+						type: TEXT;
+						description {
+							state: "default" 0.0;
+							color: 255 255 255 255;
+							text {
+								text: "Status";
+								font: FN; size: 10;
+	        		                	   	min: 1 1;
+							}
+						}
+					}
+				}
+				part { 
+					name: "elm.status.text.rect";
+					type: RECT;
+					description { 
+						state: "default" 0.0;
+						color: 0 50 0 255;
+						rel1 {
+							relative : 0.5 0;
+						}
+	                    		}
+					part { 
+						name: "elm.status.text.text";
+						type: TEXT;
+						multiline :1;
+						entry_mode : PLAIN ;
+						description {
+							state: "default" 0.0;
+							color: 255 255 255 255;
+							text {
+								text: "Status";
+								font: FN; size: 10;
+	        		                	   	min: 1 1;
+							}
+						}
+						cursor_mode : BEFORE;
+						mouse_events : 1;
+					}
+				}
+			}
+			part { 
+				name: "elm.mood.rect";
+				type: RECT;
+                    		description { 
+					state: "default" 0.0;
+		                        color: 0 0 255 255;
+					rel1 {
+						relative : 0.5 0.4;
+					}
+					rel2 {
+						relative : 1 0.8;
+					}
+				}
+				part { 
+					name: "elm.mood.label.rect";
+					type: RECT;
+					description { 
+						state: "default" 0.0;
+						color: 0 0 170 255;
+						rel2 {
+							relative : 0.5 0;
+							}
+	                    		}
+					part { 
+				 	name: "elm.mood.label.text";
+					type: TEXT;
+					description {
+						state: "default" 0.0;
+						color: 255 255 255 255;
+						text {
+							text: "Mood";
+							font: FN; size: 10;
+	        	                	   	min: 1 1;
+						}
+					}
+					}
+
+				}
+				part { 
+					name: "elm.mood.message.rect";
+					type: RECT;
+					description { 
+						state: "default" 0.0;
+						color: 0 0 90 255;
+						rel1.relative : 0.5 0;
+	                    		}
+					part { 
+				 	name: "elm.mood.message.text";
+					type: TEXT;
+					description {
+						state: "default" 0.0;
+						color: 255 255 255 255;
+						text {
+							text: "Happy";
+							font: FN; size: 10;
+	        	                	   	min: 1 1;
+						}
+					}
+					}
+				}
+			
+			}
+			part { 
+				name: "elm.visibility.rect";
+				type: RECT;
+                    		description { 
+					state: "default" 0.0;
+		                        color: 255 0 0 255;
+					rel1 {
+						relative : 0.5 0.8;
+					}
+				}
+				part { 
+				 	name: "elm.visibility.text";
+					type: TEXT;
+					description {
+						state: "default" 0.0;
+						color: 255 255 255 255;
+						text {
+							text: "Online";
+							font: FN; size: 10;
+	        	                	   	min: 1 1;
+						}
+					}
+				}
+			}
+		}
+
      }
 }
