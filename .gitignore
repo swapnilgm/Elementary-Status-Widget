@@ -7,3 +7,4 @@ Makefile
 status.eo.h
 status.eo.c
 status
+*.edj
