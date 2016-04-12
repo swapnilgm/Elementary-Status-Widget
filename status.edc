@@ -1,0 +1,21 @@
+collections {
+     group { name: "elm/status/base/default";
+          parts {
+               part { name: "Rect";
+                     type: RECT;
+                    description { state: "default" 0.0;
+                        color: 255 0 0 255;
+                    }
+               }
+               part { name: "elm.text";
+                     type: TEXT;
+                    description { state: "default" 0.0;
+                        color: 255 255 255 255;
+                        text { font: FN; size: 10;
+                           min: 1 1;
+                         }
+                    }
+               }
+          }
+     }
+}

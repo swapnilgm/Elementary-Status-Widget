@@ -1,0 +1,28 @@
+import elm_general;
+
+class Elm.Status(Elm.Layout)
+{
+   data: Elm_Status_Data;
+   eo_prefix: elm_status;
+
+   methods {
+        @property mood {
+             set {
+             }
+             get {
+             }
+             values {
+               txt: const(char)*;
+             }
+        }
+   }
+   implements {
+        class.constructor;
+        Eo.Base.constructor;
+        Eo.Base.destructor;
+        Evas.Object_Smart.add;
+        Evas.Object_Smart.del;
+        Elm.Widget.event;
+        Elm.Widget.theme_apply;
+     }
+}
