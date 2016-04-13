@@ -1,18 +1,18 @@
 collections {
-     group { 
+     group {
 		name: "elm/status/base/default";
 		parts {
-			part { 
+			part {
 				name: "elm.picture.rect";
 				type: RECT;
-                    		description { 
+                    		description {
 					state: "default" 0.0;
 		                        color: 255 0 0 255;
 					rel2 {
 						relative : 0.5 1;
 					}
 				}
-				part { 
+				part {
 				 	name: "elm.picture.image";
 					type: SWALLOW;
 					description {
@@ -21,11 +21,11 @@ collections {
 					}
 				}
 			}
-			
-			part { 
+
+			part {
 				name: "elm.status.rect";
 				type: RECT;
-                    		description { 
+                    		description {
 					state: "default" 0.0;
 		                        color: 0 255 0 255;
 					rel1 {
@@ -35,10 +35,10 @@ collections {
 						relative : 1 0.40;
 					}
 				}
-				part { 
+				part {
 					name: "elm.status.label.rect";
 					type: RECT;
-					description { 
+					description {
 						state: "default" 0.0;
 						color: 0 130 0 255;
 						rel2 {
@@ -46,7 +46,7 @@ collections {
 							}
 
 					}
-					part { 
+					part {
 				 		name: "elm.status.label.text";
 						type: TEXT;
 						description {
@@ -60,17 +60,17 @@ collections {
 						}
 					}
 				}
-				part { 
+				part {
 					name: "elm.status.text.rect";
 					type: RECT;
-					description { 
+					description {
 						state: "default" 0.0;
 						color: 0 50 0 255;
 						rel1 {
 							relative : 0.5 0;
 						}
 	                    		}
-					part { 
+					part {
 						name: "elm.status.text.text";
 						type: TEXT;
 						multiline :1;
@@ -89,10 +89,10 @@ collections {
 					}
 				}
 			}
-			part { 
+			part {
 				name: "elm.mood.rect";
 				type: RECT;
-                    		description { 
+                    		description {
 					state: "default" 0.0;
 		                        color: 0 0 255 255;
 					rel1 {
@@ -102,17 +102,17 @@ collections {
 						relative : 1 0.8;
 					}
 				}
-				part { 
+				part {
 					name: "elm.mood.label.rect";
 					type: RECT;
-					description { 
+					description {
 						state: "default" 0.0;
 						color: 0 0 170 255;
 						rel2 {
 							relative : 0.5 0;
 							}
 	                    		}
-					part { 
+					part {
 				 	name: "elm.mood.label.text";
 					type: TEXT;
 					description {
@@ -127,15 +127,15 @@ collections {
 					}
 
 				}
-				part { 
+				part {
 					name: "elm.mood.message.rect";
 					type: RECT;
-					description { 
+					description {
 						state: "default" 0.0;
 						color: 0 0 90 255;
 						rel1.relative : 0.5 0;
 	                    		}
-					part { 
+					part {
 				 	name: "elm.mood.message.text";
 					type: TEXT;
 					description {
@@ -149,19 +149,19 @@ collections {
 					}
 					}
 				}
-			
+
 			}
-			part { 
+			part {
 				name: "elm.visibility.rect";
 				type: RECT;
-                    		description { 
+                    		description {
 					state: "default" 0.0;
 		                        color: 255 0 0 255;
 					rel1 {
 						relative : 0.5 0.8;
 					}
 				}
-				part { 
+				part {
 				 	name: "elm.visibility.text";
 					type: TEXT;
 					description {

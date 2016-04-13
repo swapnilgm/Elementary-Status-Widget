@@ -15,12 +15,12 @@
 
 #define ENUM_TO_STRING(en) #en
 #define CRI printf
-typedef struct
-{
+
+typedef struct {
 	int temp;
-	char *status;
 	MOOD mood;
 	VISIBILITY visibility;
+	char *status;
 	char * picture;
 	Evas_Object* status_entry;
 	Evas_Object* image;
@@ -32,8 +32,7 @@ static const char SIG_STATUS_CHANGED[] = "status,changed";
 static const char SIG_MOOD_CHANGED[] = "mood,changed";
 static const char SIG_VISIBILITY_CHANGED[] = "visibility,changed";
 
-/* smart callbacks coming from elm button objects (besides the ones
- * coming from elm layout): */
+/* smart callbacks coming from elm status object (besides the ones coming from elm layout): */
 static const Evas_Smart_Cb_Description _smart_callbacks[] = {
 	{SIG_CLICKED, ""},
 	{SIG_PICTURE_CHANGED, ""},
@@ -70,8 +69,8 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 // This must be added to have widget heirarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
-	 //Since we are deriving from Elm.widget, 
-	// our resize object is actually null. we actually don;t use it. 
+	 //Since we are deriving from Elm.widget,
+	// our resize object is actually null. we actually don;t use it.
 	// But now we are deriving from Elm.layout
 	// add object as a resize object for the window (controls window minimum
 	// size as well as gets resized if window is resized)
@@ -82,7 +81,7 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	else
 		EINA_LOG_DBG("Layout theme set to base.");
 
-	//use icon widget to 
+	//use icon widget to
 	pd->image = elm_image_add(obj);
 	if(!elm_image_file_set(obj, "open_mouth.jpg",NULL))
 		EINA_LOG_WARN("Could not load default image");
@@ -135,7 +134,7 @@ _elm_status_status_set(Eo *obj, Elm_Status_Data *pd, const char *txt)
 			EINA_LOG_WARN("could not set the text. "
 					"Maybe part 'text' does not exist?");
 		}
-		else 
+		else
 			pd->status = txt;
 	}
 }
@@ -155,7 +154,7 @@ _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.mood.message.text' does not exist?");
 	}
-	else 
+	else
 		pd->mood = mood;
 }
 
@@ -181,7 +180,7 @@ _elm_status_visibility_set(Eo *obj, Elm_Status_Data *pd, VISIBILITY visibility)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.visibility.text' does not exist?");
 	}
-	else 
+	else
 		pd->visibility = visibility;
 }
 
@@ -201,7 +200,7 @@ _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, char *picture)
 		{
 			EINA_LOG_WARN("could not set the image." );
 		}
-		else 
+		else
 			pd->picture = picture;
 	}
 }

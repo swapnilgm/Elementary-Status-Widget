@@ -12,12 +12,12 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(ELEMENTARY REQUIRED elementary eet)
 include_directories(${ELEMENTARY_INCLUDE_DIRS})
 
-add_custom_command(OUTPUT eo_c
-COMMAND eolian_gen -I /usr/share/eolian/include/eo-1 -I/usr/share/eolian/include/efl-1 -I/usr/share/eolian/include/evas-1 -I/usr/share/eolian/include/edje-1 -I/usr/share/eolian/include/ecore-1 -I/usr/local/share/eolian/include/elementary-1 -I /usr/share/eolian/include/evas-1 --gc -o "${PROJECT_SOURCE_DIR}/elm_status.eo.c" "${PROJECT_SOURCE_DIR}/elm_status.eo"
-)
-
 add_custom_command(OUTPUT eo_h
 COMMAND eolian_gen -I /usr/share/eolian/include/eo-1 -I/usr/share/eolian/include/efl-1 -I/usr/share/eolian/include/evas-1 -I/usr/share/eolian/include/edje-1 -I/usr/share/eolian/include/ecore-1 -I/usr/local/share/eolian/include/elementary-1 -I /usr/share/eolian/include/evas-1 --gh -o "${PROJECT_SOURCE_DIR}/elm_status.eo.h" "${PROJECT_SOURCE_DIR}/elm_status.eo"
+)
+
+add_custom_command(OUTPUT eo_c
+COMMAND eolian_gen -I /usr/share/eolian/include/eo-1 -I/usr/share/eolian/include/efl-1 -I/usr/share/eolian/include/evas-1 -I/usr/share/eolian/include/edje-1 -I/usr/share/eolian/include/ecore-1 -I/usr/local/share/eolian/include/elementary-1 -I /usr/share/eolian/include/evas-1 --gc -o "${PROJECT_SOURCE_DIR}/elm_status.eo.c" "${PROJECT_SOURCE_DIR}/elm_status.eo"
 )
 
 add_custom_command(OUTPUT eo_c_file
