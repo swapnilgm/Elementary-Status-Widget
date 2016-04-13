@@ -52,14 +52,14 @@ int main(int argc, char **argv)
 	elm_status_picture_set(obj, "../monk.png");
 
 	/* resize and move */
-	evas_object_resize(obj, 400, 300);
-	evas_object_move(obj, 0, 50);
+	evas_object_resize(obj, 500, 200);
+	evas_object_move(obj, 50, 50);
 
 	evas_object_smart_callback_add(obj, "changed", _status_changed_cb, NULL);
 	evas_object_show(obj);
 
 	/* set window size to (400,400) */
-	evas_object_resize(win, 400, 400);
+	evas_object_resize(win, 600, 300);
 
 	/* display our window */
 	evas_object_show(win);

@@ -28,7 +28,7 @@ typedef struct {
 	Evas_Object* status_entry;
 	Evas_Object* image;
 	Evas_Object* icon;
-}Elm_Status_Data;
+} Elm_Status_Data;
 
 static const char SIG_CLICKED[] = "clicked";
 static const char SIG_PICTURE_CHANGED[] = "picture,changed";
@@ -52,8 +52,11 @@ static const Evas_Smart_Cb_Description _smart_callbacks[] = {
 	EOLIAN static Eo_Base *
 _elm_status_eo_base_constructor(Eo *obj, Elm_Status_Data *pd)
 {
+	/* call super class ctr */
 	obj = eo_constructor(eo_super(obj, ELM_STATUS_CLASS));
+	/* set type of our obj */
 	evas_obj_type_set(obj, MY_CLASS_NAME_LEGACY);
+	/* add our callbacks */
 	evas_obj_smart_callbacks_descriptions_set(obj, _smart_callbacks);
 	return obj;
 }
@@ -61,8 +64,8 @@ _elm_status_eo_base_constructor(Eo *obj, Elm_Status_Data *pd)
 	EOLIAN static void
 _elm_status_eo_base_destructor(Eo *obj, Elm_Status_Data *pd)
 {
+	/* call super class dtr */
 	eo_destructor(eo_super(obj, ELM_STATUS_CLASS));
-
 }
 
 	EOLIAN static void
@@ -70,8 +73,9 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 {
 	//add smart object in widget hierarchy
 	evas_obj_smart_add(eo_super(obj, ELM_STATUS_CLASS));
+
 	// This function adds obj as a sub object of parent.
-	// This must be added to have widget heirarchy (parent)
+	// This must be added to have widget hierarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
 	//Since we are deriving from Elm.widget,
