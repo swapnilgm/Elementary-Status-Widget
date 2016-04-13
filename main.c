@@ -1,3 +1,4 @@
+#define EFL_BETA_API_SUPPORT
 #include <Elementary.h>
 #include <Eo.h>
 #include "elm_status.eo.h"
@@ -12,6 +13,8 @@ static void _mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
 	printf("mood changed callback\n");
 }
 
+
+
 int main(int argc, char **argv)
 {
  	if (!elm_init(argc, argv))
@@ -25,6 +28,10 @@ int main(int argc, char **argv)
 
 	/* on quitting last window, quit the Ecore event loop */
 	elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+	win = elm_win_util_standard_add("Eo Smart Object",
+			"Eo Status Widget");
+	elm_win_focus_highlight_enabled_set(win, 1);
+	elm_win_autodel_set(win, 1);
 
 	/* create window with title "Eo Status Widget" and 'name' prop set to "main" */
 	win = elm_win_util_standard_add("main", "Eo Status Widget");
@@ -42,7 +49,7 @@ int main(int argc, char **argv)
 	/* elm_status_set(obj, "Hopping for best"); */
 	elm_status_mood_set(obj, MOOD_SAD);
 	elm_status_visibility_set(obj, VISIBILITY_OFFLINE);
-	elm_status_picture_set(obj, "some path");
+	elm_status_picture_set(obj, "../monk.png");
 
 	/* resize and move */
 	evas_object_resize(obj, 400, 300);
@@ -66,5 +73,6 @@ int main(int argc, char **argv)
 
 	/* shut everything down */
 	elm_shutdown();
+
 	return 0;
 }

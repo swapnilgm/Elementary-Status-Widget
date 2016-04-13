@@ -18,13 +18,17 @@
 
 typedef struct {
 	int temp;
+
 	MOOD mood;
 	VISIBILITY visibility;
+
 	char *status;
-	char * picture;
+	char *picture;
+
 	Evas_Object* status_entry;
 	Evas_Object* image;
-} Elm_Status_Data;
+	Evas_Object* icon;
+}Elm_Status_Data;
 
 static const char SIG_CLICKED[] = "clicked";
 static const char SIG_PICTURE_CHANGED[] = "picture,changed";
@@ -32,7 +36,8 @@ static const char SIG_STATUS_CHANGED[] = "status,changed";
 static const char SIG_MOOD_CHANGED[] = "mood,changed";
 static const char SIG_VISIBILITY_CHANGED[] = "visibility,changed";
 
-/* smart callbacks coming from elm status object (besides the ones coming from elm layout): */
+/* smart callbacks coming from elm button objects (besides the ones
+ * coming from elm layout): */
 static const Evas_Smart_Cb_Description _smart_callbacks[] = {
 	{SIG_CLICKED, ""},
 	{SIG_PICTURE_CHANGED, ""},
@@ -65,11 +70,11 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 {
 	//add smart object in widget hierarchy
 	evas_obj_smart_add(eo_super(obj, ELM_STATUS_CLASS));
-// This function adds obj as a sub object of parent.
-// This must be added to have widget heirarchy (parent)
+	// This function adds obj as a sub object of parent.
+	// This must be added to have widget heirarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
-	 //Since we are deriving from Elm.widget,
+	//Since we are deriving from Elm.widget,
 	// our resize object is actually null. we actually don;t use it.
 	// But now we are deriving from Elm.layout
 	// add object as a resize object for the window (controls window minimum
@@ -82,18 +87,31 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 		EINA_LOG_DBG("Layout theme set to base.");
 
 	//use icon widget to
-	pd->image = elm_image_add(obj);
-	if(!elm_image_file_set(obj, "open_mouth.jpg",NULL))
-		EINA_LOG_WARN("Could not load default image");
-	else
-		EINA_LOG_DBG("Image Loaded successfully.");
-	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->image);
+	//pd->image = elm_image_add(obj);
+	pd->icon = elm_icon_add(obj);
+	evas_object_repeat_events_set(pd->icon, EINA_TRUE);
 
-	/*   evas_object_size_hint_align_set(pd->btn, EVAS_HINT_FILL,
-	     EVAS_HINT_FILL);
-	     evas_object_size_hint_weight_set(pd->btn, EVAS_HINT_EXPAND,
-	     EVAS_HINT_EXPAND);
-	     */
+	elm_image_resizable_set(pd->icon, EINA_TRUE, EINA_TRUE);
+	elm_image_smooth_set(pd->icon, EINA_TRUE);
+	elm_image_fill_outside_set(pd->icon, EINA_TRUE);
+	elm_image_prescale_set(pd->icon, 0);
+	elm_object_scale_set(pd->icon, elm_widget_scale_get(obj));
+
+	char *picture =  "../monk.png";
+	if(!elm_image_file_set(pd->icon, picture, NULL))
+	{
+		EINA_LOG_WARN("could not set the image." );
+	}
+	else
+		pd->picture = picture;
+	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
+
+	evas_object_show(pd->icon);
+	evas_object_size_hint_align_set(pd->icon, EVAS_HINT_FILL,
+			EVAS_HINT_FILL);
+	evas_object_size_hint_weight_set(pd->icon, EVAS_HINT_EXPAND,
+			EVAS_HINT_EXPAND);
+
 
 }
 
@@ -101,8 +119,8 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 _elm_status_evas_object_smart_del(Eo *obj, Elm_Status_Data *pd)
 {
 	//evas_obj_smart_add(eo_super(obj, ELM_STATUS_CLASS));
-//	ELM_SAFE_FREE(pd->image, evas_object_del);
-//	eo_do_super(obj, ELM_STATUS_CLASS, evas_object_del);
+	//	ELM_SAFE_FREE(pd->image, evas_object_del);
+	//	eo_do_super(obj, ELM_STATUS_CLASS, evas_object_del);
 
 }
 
@@ -196,7 +214,7 @@ _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, char *picture)
 	if (picture)
 	{
 		EINA_LOG_INFO("Valid picture url found.");
-		if(!elm_image_file_set(obj, picture, NULL))
+		if(!elm_image_file_set(pd->icon, picture, NULL))
 		{
 			EINA_LOG_WARN("could not set the image." );
 		}
