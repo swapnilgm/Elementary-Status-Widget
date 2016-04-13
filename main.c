@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 	elm_status_set(obj, "Hopping for best");
 	elm_status_mood_set(obj, MOOD_SAD);
 	elm_status_visibility_set(obj, VISIBILITY_OFFLINE);
-	elm_status_picture_set(obj, "some path");
+	elm_status_picture_set(obj, "/home/swapnil/Pictures/duel_boot.jpeg");
 	evas_object_resize(obj, 400, 300);
 	evas_object_move(obj, 0, 50);
 
@@ -48,6 +48,9 @@ int main(int argc, char **argv)
 	evas_object_resize(win, 400, 400);
 	evas_object_show(win);
 
+	Evas_Object *btn = elm_button_add(win);
+	//elm_object_text_set(btn, "Change Status");
+	evas_object_show(btn);
 	elm_object_focus_set(obj, 1);
 
 	elm_status_set(obj, "Hopping for worst");
