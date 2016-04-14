@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 	//elm_status_picture_set(obj, "../monk.png");
 
 	/* resize and move */
-	evas_object_resize(obj, 1000, 400);
+	evas_object_resize(obj, 700, 200);
 	evas_object_move(obj, 50, 50);
 
 	evas_object_smart_callback_add(obj, SIG_STATUS_CHANGED , _status_changed_cb, NULL);
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 	evas_object_show(obj);
 
 	/* set window size to (400,400) */
-	evas_object_resize(win, 1100, 500);
+	evas_object_resize(win, 800, 300);
 
 	/* display our window */
 	evas_object_show(win);

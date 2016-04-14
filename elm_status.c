@@ -55,7 +55,6 @@ _elm_status_eo_base_destructor(Eo *obj, Elm_Status_Data *pd)
 {
 	/* call super class dtr */
 	eo_destructor(eo_super(obj, ELM_STATUS_CLASS));
-
 }
 
 	EOLIAN static void
@@ -67,8 +66,8 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	// This must be added to have widget hierarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
-	//Since we are deriving from Elm.widget, 
-	// our resize object is actually null. we actually don;t use it. 
+	//Since we are deriving from Elm.widget,
+	// our resize object is actually null. we actually don;t use it.
 	// But now we are deriving from Elm.layout
 	// add object as a resize object for the window (controls window minimum
 	// size as well as gets resized if window is resized)
@@ -79,11 +78,11 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	else
 		EINA_LOG_DBG("Layout theme set to base.");
 
-	//use icon widget to load image 
+	//use icon widget to load image
 	pd->icon = elm_icon_add(obj);
 	evas_object_repeat_events_set(pd->icon, EINA_TRUE);
 	//although the icon widget provides basic image functionality
-	//the apis over icon are deprecated 
+	//the apis over icon are deprecated
 	//so we use image api to manage the image attributes
 	elm_image_resizable_set(pd->icon, EINA_TRUE, EINA_TRUE);
 	elm_image_smooth_set(pd->icon, EINA_TRUE);
@@ -97,7 +96,7 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	//	{
 	//		EINA_LOG_WARN("could not set the image." );
 	//	}
-	//	else 
+	//	else
 	pd->picture = "no_photo";
 	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
 
@@ -151,7 +150,7 @@ _elm_status_status_set(Eo *obj, Elm_Status_Data *pd, const char *txt)
 			EINA_LOG_WARN("could not set the text. "
 					"Maybe part 'text' does not exist?");
 		}
-		else { 
+		else {
 			Status_event_info *sei = {
 				SIG_STATUS_CHANGED,
 				pd->status,
@@ -180,7 +179,7 @@ _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.mood.message.text' does not exist?");
 	}
-	else{ 
+	else{
 		Status_event_info *sei = {
 			SIG_MOOD_CHANGED,
 			pd->mood,
