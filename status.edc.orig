@@ -85,7 +85,12 @@ collections {
 					part {
 						name: "elm.status.text.text";
 						type: TEXT;
+<<<<<<< Updated upstream
 						multiline: 1;
+						entry_mode: PLAIN ;
+=======
+						multiline :1;
+>>>>>>> Stashed changes
 						description {
 							state: "default" 0.0;
 							color: 255 255 255 255;
@@ -100,8 +105,6 @@ collections {
 								ellipsis: 0.9;
 							}
 						}
-						cursor_mode : BEFORE;
-						mouse_events : 1;
 					}
 				}
 			} // end status border
@@ -115,8 +118,10 @@ collections {
 		                        color: 0 0 127 127;
 
 					rel1.relative : 0 1;
+					rel1.to: "elm.status.rect";
+
 					rel2.relative: 1 2;
-					rel.to: "elm.status.rect";
+					rel2.to: "elm.status.rect";
 				}
 				part {
 					name: "elm.mood.label.rect";

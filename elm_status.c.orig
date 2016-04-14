@@ -15,17 +15,20 @@
 
 #define ENUM_TO_STRING(en) #en
 #define CRI printf
-typedef struct
-{
+
+typedef struct {
 	int temp;
-	char *status;
+
 	MOOD mood;
 	VISIBILITY visibility;
-	char * picture;
+
+	char *status;
+	char *picture;
+
 	Evas_Object* status_entry;
 	Evas_Object* image;
 	Evas_Object* icon;
-}Elm_Status_Data;
+} Elm_Status_Data;
 
 static const char SIG_CLICKED[] = "clicked";
 static const char SIG_PICTURE_CHANGED[] = "picture,changed";
@@ -49,34 +52,44 @@ static const Evas_Smart_Cb_Description _smart_callbacks[] = {
 	EOLIAN static Eo_Base *
 _elm_status_eo_base_constructor(Eo *obj, Elm_Status_Data *pd)
 {
+<<<<<<< Updated upstream
 	/* call super class ctr */
+=======
+	EINA_LOG_WARN(__func__);
+>>>>>>> Stashed changes
 	obj = eo_constructor(eo_super(obj, ELM_STATUS_CLASS));
 	/* set type of our obj */
 	evas_obj_type_set(obj, MY_CLASS_NAME_LEGACY);
 	/* add our callbacks */
 	evas_obj_smart_callbacks_descriptions_set(obj, _smart_callbacks);
+	elm_interface_atspi_accessible_role_set(obj, ELM_ATSPI_ROLE_STATUS);
 	return obj;
 }
 
 	EOLIAN static void
 _elm_status_eo_base_destructor(Eo *obj, Elm_Status_Data *pd)
 {
+<<<<<<< Updated upstream
 	/* call super class dtr */
+=======
+	EINA_LOG_WARN(__func__);
+>>>>>>> Stashed changes
 	eo_destructor(eo_super(obj, ELM_STATUS_CLASS));
-
 }
 
 	EOLIAN static void
 _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 {
+	EINA_LOG_WARN(__func__);
 	//add smart object in widget hierarchy
 	evas_obj_smart_add(eo_super(obj, ELM_STATUS_CLASS));
+
 	// This function adds obj as a sub object of parent.
 	// This must be added to have widget hierarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
-	//Since we are deriving from Elm.widget, 
-	// our resize object is actually null. we actually don;t use it. 
+	//Since we are deriving from Elm.widget,
+	// our resize object is actually null. we actually don;t use it.
 	// But now we are deriving from Elm.layout
 	// add object as a resize object for the window (controls window minimum
 	// size as well as gets resized if window is resized)
@@ -87,7 +100,12 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	else
 		EINA_LOG_DBG("Layout theme set to base.");
 
+<<<<<<< Updated upstream
+	//use icon widget to
+	//pd->image = elm_image_add(obj);
+=======
 	//use icon widget to load image 
+>>>>>>> Stashed changes
 	pd->icon = elm_icon_add(obj);
 	evas_object_repeat_events_set(pd->icon, EINA_TRUE);
 	//although the icon widget provides basic image functionality
@@ -99,6 +117,15 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	elm_image_prescale_set(pd->icon, 0);
 	elm_object_scale_set(pd->icon, elm_widget_scale_get(obj));
 
+<<<<<<< Updated upstream
+	char *picture =  "../monk.png";
+	if(!elm_image_file_set(pd->icon, picture, NULL))
+	{
+		EINA_LOG_WARN("could not set the image." );
+	}
+	else
+		pd->picture = picture;
+=======
 //	char *picture =  "/duel_boot.jpeg";
 	elm_icon_standard_set(pd->icon, "no_photo");
 //	if(!elm_image_file_set(pd->icon, picture, NULL))
@@ -107,6 +134,7 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 //	}
 //	else 
 		pd->picture = "no_photo";
+>>>>>>> Stashed changes
 	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
 
 	evas_object_size_hint_align_set(pd->icon, EVAS_HINT_FILL,
@@ -159,7 +187,7 @@ _elm_status_status_set(Eo *obj, Elm_Status_Data *pd, const char *txt)
 			EINA_LOG_WARN("could not set the text. "
 					"Maybe part 'text' does not exist?");
 		}
-		else 
+		else
 			pd->status = txt;
 	}
 }
@@ -174,13 +202,14 @@ _elm_status_status_get(Eo *obj, Elm_Status_Data *pd)
 	EOLIAN static void
 _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 {
+	EINA_LOG_WARN(__func__);
 
 	if (!elm_obj_layout_text_set(obj,"elm.mood.message.text", "mood"+mood))
 	{
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.mood.message.text' does not exist?");
 	}
-	else 
+	else
 		pd->mood = mood;
 }
 
@@ -209,7 +238,7 @@ _elm_status_visibility_set(Eo *obj, Elm_Status_Data *pd, VISIBILITY visibility)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.visibility.text' does not exist?");
 	}
-	else 
+	else
 		pd->visibility = visibility;
 }
 
@@ -231,7 +260,7 @@ _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, char *picture)
 		{
 			EINA_LOG_WARN("could not set the image." );
 		}
-		else 
+		else
 			pd->picture = picture;
 	}
 }

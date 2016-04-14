@@ -3,15 +3,12 @@
 #include <Eo.h>
 #include "elm_status.eo.h"
 
-
-	static void
-_status_changed_cb(void *data, Evas_Object *obj,void *event_info)
+static void _status_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	printf("status changed callback\n");
 }
-	
-	static void
-_mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
+
+static void _mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	printf("mood changed callback\n");
 }
@@ -35,11 +32,17 @@ int main(int argc, char **argv)
 	/* TODO */
 	elm_theme_overlay_add(NULL, "./status.edj");
 	//elm_config_item_select_on_focus_disabled_set(1);
+
+	/* on quitting last window, quit the Ecore event loop */
 	elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
 	win = elm_win_util_standard_add("Eo Smart Object",
 			"Eo Status Widget");
 	elm_win_focus_highlight_enabled_set(win, 1);
+	elm_win_autodel_set(win, 1);
 
+<<<<<<< Updated upstream
+	/* create window with title "Eo Status Widget" and 'name' prop set to "main" */
+	win = elm_win_util_standard_add("main", "Eo Status Widget");
 
 	/* delete the window if user hits the close button */
 	elm_win_autodel_set(win, EINA_TRUE);
@@ -54,11 +57,21 @@ int main(int argc, char **argv)
 	/* elm_status_set(obj, "Hopping for best"); */
 	elm_status_mood_set(obj, MOOD_SAD);
 	elm_status_visibility_set(obj, VISIBILITY_OFFLINE);
-	//elm_status_picture_set(obj, "../monk.png");
+	elm_status_picture_set(obj, "../monk.png");
 
 	/* resize and move */
 	evas_object_resize(obj, 500, 200);
 	evas_object_move(obj, 50, 50);
+=======
+	Evas_Object *obj = eo_add(ELM_STATUS_CLASS,win);
+	//`  Evas_Object *obj = elm_status_add(win);
+	elm_status_set(obj, "Hopping for best");
+	elm_status_mood_set(obj, MOOD_SAD);
+	elm_status_visibility_set(obj, VISIBILITY_OFFLINE);
+	//elm_status_picture_set(obj, "/home/swapnil/Pictures/duel_boot.jpeg");
+	evas_object_resize(obj, 400, 300);
+	evas_object_move(obj, 0, 50);
+>>>>>>> Stashed changes
 
 	evas_object_smart_callback_add(obj, "status,changed", _status_changed_cb, NULL);
 	evas_object_show(obj);
@@ -69,6 +82,11 @@ int main(int argc, char **argv)
 	/* display our window */
 	evas_object_show(win);
 
+<<<<<<< Updated upstream
+	elm_object_focus_set(obj, EINA_TRUE);
+
+	/* elm_status_set(obj, "Hopping for worst"); */
+=======
 	Evas_Object *entry = elm_entry_add(win);
 	elm_entry_autosave_set(entry, EINA_FALSE);
 	elm_entry_file_set(entry,"/tmp/en.txt",ELM_TEXT_FORMAT_MARKUP_UTF8);
@@ -76,10 +94,12 @@ int main(int argc, char **argv)
 	evas_object_resize(entry, 400, 50);
 	evas_object_move(entry, 0, 0);
 	evas_object_show(entry);
-	elm_object_focus_set(obj, EINA_TRUE);
+	elm_object_focus_set(obj, 1);
 	evas_object_smart_callback_add(entry,"clicked,double",_edit_dblclick_cb,obj);
 
 	evas_object_move(obj, 0, 50);
+	elm_status_set(obj, "Hopping for worst");
+>>>>>>> Stashed changes
 
 	/* start the Ecore main loop */
 	elm_run();
