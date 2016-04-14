@@ -5,3 +5,4 @@ elm_status.eo.c
 *.edj
 build
 tags
+*.orig
