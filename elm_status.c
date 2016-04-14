@@ -9,6 +9,7 @@
 #include <elm_widget.h>
 #include <elm_layout.h>
 #include <elm_widget_layout.h>
+#include "elm_widget_status.h"
 
 #define MY_CLASS ELM_STATUS_CLASS
 #define MY_CLASS_NAME_LEGACY "elm_status"
@@ -22,16 +23,8 @@ typedef struct
 	MOOD mood;
 	VISIBILITY visibility;
 	char * picture;
-	Evas_Object* status_entry;
-	Evas_Object* image;
 	Evas_Object* icon;
 }Elm_Status_Data;
-
-static const char SIG_CLICKED[] = "clicked";
-static const char SIG_PICTURE_CHANGED[] = "picture,changed";
-static const char SIG_STATUS_CHANGED[] = "status,changed";
-static const char SIG_MOOD_CHANGED[] = "mood,changed";
-static const char SIG_VISIBILITY_CHANGED[] = "visibility,changed";
 
 /* smart callbacks coming from elm button objects (besides the ones
  * coming from elm layout): */
@@ -46,9 +39,8 @@ static const Evas_Smart_Cb_Description _smart_callbacks[] = {
 	{NULL, NULL}
 };
 
-	EOLIAN static Eo_Base *
-_elm_status_eo_base_constructor(Eo *obj, Elm_Status_Data *pd)
-{
+EOLIAN static Eo_Base *
+_elm_status_eo_base_constructor(Eo *obj, Elm_Status_Data *pd){
 	/* call super class ctr */
 	obj = eo_constructor(eo_super(obj, ELM_STATUS_CLASS));
 	/* set type of our obj */
@@ -99,14 +91,14 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	elm_image_prescale_set(pd->icon, 0);
 	elm_object_scale_set(pd->icon, elm_widget_scale_get(obj));
 
-//	char *picture =  "/duel_boot.jpeg";
+	//	char *picture =  "/duel_boot.jpeg";
 	elm_icon_standard_set(pd->icon, "no_photo");
-//	if(!elm_image_file_set(pd->icon, picture, NULL))
-//	{
-//		EINA_LOG_WARN("could not set the image." );
-//	}
-//	else 
-		pd->picture = "no_photo";
+	//	if(!elm_image_file_set(pd->icon, picture, NULL))
+	//	{
+	//		EINA_LOG_WARN("could not set the image." );
+	//	}
+	//	else 
+	pd->picture = "no_photo";
 	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
 
 	evas_object_size_hint_align_set(pd->icon, EVAS_HINT_FILL,
@@ -159,8 +151,16 @@ _elm_status_status_set(Eo *obj, Elm_Status_Data *pd, const char *txt)
 			EINA_LOG_WARN("could not set the text. "
 					"Maybe part 'text' does not exist?");
 		}
-		else 
+		else { 
+			Status_event_info *sei = {
+				SIG_STATUS_CHANGED,
+				pd->status,
+				txt,
+				"elm.status.text.text"
+			};
 			pd->status = txt;
+			evas_object_smart_callback_call(obj,SIG_STATUS_CHANGED, sei);
+		}
 	}
 }
 
@@ -180,8 +180,16 @@ _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.mood.message.text' does not exist?");
 	}
-	else 
+	else{ 
+		Status_event_info *sei = {
+			SIG_MOOD_CHANGED,
+			pd->mood,
+			mood,
+			"elm.mood.message.text"
+		};
+		evas_object_smart_callback_call(obj,SIG_MOOD_CHANGED, sei);
 		pd->mood = mood;
+	}
 }
 
 	EOLIAN static MOOD
@@ -198,7 +206,7 @@ elm_status_add(Evas_Object *parent)
 	EINA_SAFETY_ON_NULL_RETURN_VAL(parent, NULL);
 	Evas_Object *obj = eo_add(MY_CLASS, parent);
 	return obj;
-}
+	}
 
 	EOLIAN static void
 _elm_status_visibility_set(Eo *obj, Elm_Status_Data *pd, VISIBILITY visibility)
@@ -209,8 +217,16 @@ _elm_status_visibility_set(Eo *obj, Elm_Status_Data *pd, VISIBILITY visibility)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.visibility.text' does not exist?");
 	}
-	else 
+	else {
+		Status_event_info *sei = {
+			SIG_VISIBILITY_CHANGED,
+			pd->visibility,
+			visibility,
+			"elm.visibility.text"
+		};
+		evas_object_smart_callback_call(obj,SIG_VISIBILITY_CHANGED, "elm.visibility.text");
 		pd->visibility = visibility;
+	}
 }
 
 	EOLIAN static VISIBILITY
@@ -231,8 +247,16 @@ _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, char *picture)
 		{
 			EINA_LOG_WARN("could not set the image." );
 		}
-		else 
+		else {
+			Status_event_info *sei = {
+				SIG_PICTURE_CHANGED,
+				pd->picture,
+				picture,
+				"elm.picture.image"
+			};
+			evas_object_smart_callback_call(obj,SIG_PICTURE_CHANGED, "elm.picture.image");
 			pd->picture = picture;
+		}
 	}
 }
 
