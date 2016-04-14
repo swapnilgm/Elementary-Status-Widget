@@ -9,12 +9,13 @@ _status_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	printf("status changed callback\n");
 }
-	
+
 	static void
 _mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	printf("mood changed callback\n");
 }
+
 	static void
 _edit_dblclick_cb(void *data, Evas_Object *obj,void *event_info)
 {
@@ -32,14 +33,14 @@ int main(int argc, char **argv)
 
 	/* window object */
 	Evas_Object *win;
-	/* TODO */
+	/* add our .edj to default theme */
 	elm_theme_overlay_add(NULL, "./status.edj");
-	//elm_config_item_select_on_focus_disabled_set(1);
-	elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
-	win = elm_win_util_standard_add("Eo Smart Object",
-			"Eo Status Widget");
-	elm_win_focus_highlight_enabled_set(win, 1);
 
+	/* quit if our window is closed */
+	elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+
+	/* add our widget to the window */
+	win = elm_win_util_standard_add("Eo Status Widget", "Status Widget Demo");
 
 	/* delete the window if user hits the close button */
 	elm_win_autodel_set(win, EINA_TRUE);
@@ -49,7 +50,6 @@ int main(int argc, char **argv)
 
 	/* initialize ELM_STATUS_CLASS object with `win` as parent */
 	Evas_Object *obj = eo_add(ELM_STATUS_CLASS, win);
-	/* Evas_Object *obj = elm_status_add(win); */
 
 	/* elm_status_set(obj, "Hopping for best"); */
 	elm_status_mood_set(obj, MOOD_SAD);
@@ -57,14 +57,14 @@ int main(int argc, char **argv)
 	//elm_status_picture_set(obj, "../monk.png");
 
 	/* resize and move */
-	evas_object_resize(obj, 500, 200);
+	evas_object_resize(obj, 1000, 400);
 	evas_object_move(obj, 50, 50);
 
 	evas_object_smart_callback_add(obj, "status,changed", _status_changed_cb, NULL);
 	evas_object_show(obj);
 
 	/* set window size to (400,400) */
-	evas_object_resize(win, 600, 300);
+	evas_object_resize(win, 1100, 500);
 
 	/* display our window */
 	evas_object_show(win);
