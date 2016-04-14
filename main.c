@@ -73,6 +73,7 @@ int main(int argc, char **argv)
 
 	/* window object */
 	Evas_Object *win;
+
 	/* add our .edj to default theme */
 	elm_theme_overlay_add(NULL, "./status.edj");
 
@@ -88,8 +89,7 @@ int main(int argc, char **argv)
 	/* Set the enabled status for the focus highlight in a window TODO what does this mean? */
 	elm_win_focus_highlight_enabled_set(win, EINA_TRUE);
 
-	/* initialize ELM_STATUS_CLASS object with `win` as parent */
-//	Evas_Object *obj = eo_add(ELM_STATUS_CLASS, win);
+	/* initialize status widget with `win` as parent */
 	Evas_Object *obj = elm_status_add(win);
 
 	/* elm_status_set(obj, "Hopping for best"); */
@@ -98,8 +98,8 @@ int main(int argc, char **argv)
 	//elm_status_picture_set(obj, "../monk.png");
 
 	/* resize and move */
-	evas_object_resize(obj, 700, 200);
-	evas_object_move(obj, 50, 50);
+	evas_object_resize(obj, 400, 150);
+	evas_object_move(obj, 100, 100);
 
 	evas_object_smart_callback_add(obj, SIG_STATUS_CHANGED , _status_changed_cb, NULL);
 	evas_object_smart_callback_add(obj, SIG_PICTURE_CHANGED, _picture_changed_cb, NULL);
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 	evas_object_show(obj);
 
 	/* set window size to (400,400) */
-	evas_object_resize(win, 800, 300);
+	evas_object_resize(win, 1000, 800);
 
 	/* display our window */
 	evas_object_show(win);

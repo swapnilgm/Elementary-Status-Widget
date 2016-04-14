@@ -16,18 +16,24 @@ color_classes {
    	}
    	color_class
    	{
-   		name: "visibility.rect";
-   		color: 20 30 40 255;
+   		name: "mood.icon.rect";
+   		color: 22 22 22 255;
    	}
    	color_class
    	{
-   		name: "label.rect";
-   		color: 0 0 0 0;
+   		name: "visibility.rect";
+   		color: 220 220 220 255;
    	}
+//   	color_class
+//   	{
+//   		name: "label.rect";
+//   		color: 0 0 0 0;
+//   	}
    	color_class
    	{
    		name: "header";
-   		color: 100 100 100 255;
+   		color: 0 100 200 255;
+   		color2: 10 10 10 25;
    	}
    	color_class
    	{
@@ -42,7 +48,8 @@ color_classes {
    	color_class
    	{
    		name: "visibility.text";
-   		color: 0 255 0 255;
+   		color: 10 225 100 255;
+   		color2: 200 200 200 255;
    	}
 }
 
@@ -69,9 +76,9 @@ collections {
 						color: 255 255 255 255;
 
 						// the top left corner
-						rel1.relative: 0.2 0.2;
+						rel1.relative: 0.1 0.1;
 						// the bottom right corner
-						rel2.relative: 0.8 0.8;
+						rel2.relative: 0.9 0.9;
 					}
 				}
 			} // end picture border
@@ -89,68 +96,69 @@ collections {
 
 					rel2.relative: 1 0.3;
 				}
-				part {
-					name: "elm.status.label.rect";
-					type: RECT;
-					description {
-						state: "default" 0.0;
-						color_class: "label.rect";
-
-						rel1.relative: 0.02 0.1;
-						rel2.relative: 0.25 0.9;
-					}
+//				part {
+//					name: "elm.status.label.rect";
+//					type: RECT;
+//					description {
+//						state: "default" 0.0;
+//						color_class: "label.rect";
+//
+//						rel1.relative: 0.02 0.1;
+//						rel2.relative: 0.25 0.9;
+//					}
 					part {
 				 		name: "elm.status.label.text";
 						type: TEXT;
-						effect: SHADOW;
+						effect: GLOW;
 						description {
 							state: "default" 0.0;
 							color_class: "header";
 
-							rel1.relative: 0.01 0.01;
-							rel2.relative: 0.99 0.99;
+							rel1.relative: 0.02 0.1;
+							rel2.relative: 0.25 0.9;
 							text {
 								text: "Status:";
 								fit: 1 1;
-								size: 30;
+								size: 20;
 								align: 0 0.5;
 							}
 						}
 					}
-				}
+//				}
+//				part {
+//					name: "elm.status.text.rect";
+//					type: RECT;
+//					description {
+//						state: "default" 0.0;
+//						color_class: "label.rect";
+//
+//						rel1.relative: 1.1 0;
+//						rel1.to: "elm.status.label.rect";
+//
+//						rel2.relative: 0.98 0.9;
+//	                    		}
 				part {
-					name: "elm.status.text.rect";
-					type: RECT;
+					name: "elm.status.text.text";
+					type: TEXT;
+					multiline: 1;
 					description {
 						state: "default" 0.0;
-						color_class: "label.rect";
+						color_class: "status.text";
 
 						rel1.relative: 1.1 0;
-						rel1.to: "elm.status.label.rect";
-
+						rel1.to: "elm.status.label.text";
 						rel2.relative: 0.98 0.9;
-	                    		}
-					part {
-						name: "elm.status.text.text";
-						type: TEXT;
-						multiline: 1;
-						description {
-							state: "default" 0.0;
-							color_class: "status.text";
-
-							rel1.relative: 0.1 0.1;
-							rel2.relative: 0.9 0.9;
-							text {
-								text: "up late... doing my CS630A project";
-								fit: 1 1;
-								size: 25;
-								align: 0 0.5;
-							}
+						text {
+							text: "up late... doing my CS630A project";
+							fit: 1 1;
+							size: 20;
+							align: 0 0.5;
 						}
-						cursor_mode : BEFORE;
-						mouse_events : 1;
 					}
+					cursor_mode : BEFORE;
+					mouse_events : 1;
 				}
+//				}
 			} // end status border
 
 			// mood border
@@ -165,93 +173,93 @@ collections {
 					rel2.relative: 1 2;
 					rel.to: "elm.status.rect";
 				}
-				part {
-					name: "elm.mood.label.rect";
-					type: RECT;
-					description {
-						state: "default" 0.0;
-						color_class: "label.rect";
-
-						rel1.relative: 0.02 0.1;
-						rel2.relative: 0.25 0.9;
-					}
-					part {
-				 		name: "elm.mood.label.text";
-						type: TEXT;
-						effect: SHADOW;
-						description {
-							state: "default" 0.0;
-							color_class: "header";
-
-							rel1.relative: 0.01 0.01;
-							rel2.relative: 0.99 0.99;
-							text {
-								text: "Mood:";
-								fit: 1 1;
-								size: 30;
-								align: 0 0.5;
-							}
-						}
-					}
-				}
-				part {
-					name: "elm.mood.message.rect";
-					type: RECT;
-					description {
-						state: "default" 0.0;
-						color_class: "label.rect";
-
-						rel1.relative: 1.1 0;
-						rel1.to: "elm.mood.label.rect";
-
-						rel2.relative: 0.8 0.9;
-	                    		}
-					part {
-						name: "elm.mood.message.text";
-						type: TEXT;
-						entry_mode: PLAIN;
-						description {
-							state: "default" 0.0;
-							color_class: "mood.text";
-
-							rel1.relative: 0.1 0.01;
-							rel2.relative: 0.9 0.99;
-
-							text {
-								text: "annoyed like hell";
-								fit: 1 1;
-								size: 25;
-								align: 0 0.5;
-							}
-						}
-					}
-				}
 //				part {
-//					name: "elm.mood.icon.rect";
+//					name: "elm.mood.label.rect";
 //					type: RECT;
 //					description {
 //						state: "default" 0.0;
-//						color: 127 127 127 127;
+//						color_class: "label.rect";
 //
-//						rel1.relative: 1 0;
-//						rel1.to: "elm.mood.message.rect";
-//
-//						rel2.relative: 1 0.9;
+//						rel1.relative: 0.02 0.1;
+//						rel2.relative: 0.25 0.9;
 //					}
-//					part {
-//				 		name: "elm.mood.icon.image";
-//						type: SWALLOW;
-//						description {
-//							state: "default" 0.0;
-//							color: 255 255 255 255;
-//
-//							// the top left corner
-//							rel1.relative: 0.1 0.1;
-//							// the bottom right corner
-//							rel2.relative: 0.9 0.9;
-//						}
-//					}
+				part {
+				 	name: "elm.mood.label.text";
+					type: TEXT;
+					effect: GLOW;
+					description {
+						state: "default" 0.0;
+						color_class: "header";
+
+						rel1.relative: 0.02 0.1;
+						rel2.relative: 0.25 0.9;
+						text {
+							text: "Mood:";
+							fit: 1 1;
+							size: 20;
+							align: 0 0.5;
+						}
+					}
+				}
 //				}
+//				part {
+//					name: "elm.mood.message.rect";
+//					type: RECT;
+//					description {
+//						state: "default" 0.0;
+//						color_class: "label.rect";
+//
+//						rel1.relative: 1.1 0;
+//						rel1.to: "elm.mood.label.rect";
+//
+//						rel2.relative: 0.8 0.9;
+//	                    		}
+				part {
+					name: "elm.mood.message.text";
+					type: TEXT;
+					entry_mode: PLAIN;
+					description {
+						state: "default" 0.0;
+						color_class: "mood.text";
+
+						rel1.relative: 1 0;
+						rel1.to: "elm.mood.label.text";
+						rel2.relative: 0.8 0.9;
+
+						text {
+							text: "annoyed like hell";
+							fit: 1 1;
+							size: 20;
+							align: 0 0.5;
+						}
+					}
+				}
+				part {
+					name: "elm.mood.icon.rect";
+					type: RECT;
+					description {
+						state: "default" 0.0;
+						color_class: "mood.icon.rect";
+
+						rel1.relative: 1 0;
+						rel1.to: "elm.mood.message.text";
+
+						rel2.relative: 0.95 1;
+					}
+					part {
+				 		name: "elm.mood.icon.image";
+						type: SWALLOW;
+						description {
+							state: "default" 0.0;
+							color: 255 255 255 255;
+
+							// the top left corner
+							rel1.relative: 0.1 0.1;
+							// the bottom right corner
+							rel2.relative: 0.9 0.9;
+						}
+					}
+				}
 			} // end of mood border
 
 			part {
@@ -291,7 +299,7 @@ collections {
 				part {
 				 	name: "elm.visibility.text";
 					type: TEXT;
-					effect: FAR_SOFT_SHADOW;
+					effect: GLOW;
 					entry_mode: PLAIN;
 					description {
 						state: "default" 0.0;
@@ -303,7 +311,7 @@ collections {
 						text {
 							text: "Online Now!";
 							fit: 1 1;
-							size: 30;
+							size: 20;
 							align: 0 0.5;
 						}
 					}
