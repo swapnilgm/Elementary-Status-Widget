@@ -16,6 +16,7 @@
 
 #define ENUM_TO_STRING(en) #en
 #define CRI printf
+
 typedef struct
 {
 	int temp;
@@ -24,9 +25,10 @@ typedef struct
 	VISIBILITY visibility;
 	char * picture;
 	Evas_Object* icon;
+
 	/*file selector*/
 	Evas_Object* fs;
-	const char *fs_title; 
+	const char *fs_title;
 	/*file selector window*/
 	Evas_Object* fsw;
 	Evas_Object* entry;
@@ -90,7 +92,7 @@ _selection_done_cb(void *data, const Eo_Event *event)
 }
 
 
-	static void 
+	static void
 _new_window_add(Elm_Status_Data *pd)
 {
 	Evas_Object *win, *bg;
@@ -116,15 +118,15 @@ _initialize_image_selector(Elm_Status_Data *pd)
 
 	EINA_LOG_WARN("Adding new iwndow ");
 	printf("%x", pd->fsw);
-	/* add file selector, in list mode */ 
+	/* add file selector, in list mode */
 	pd->fs = elm_fileselector_add(pd->fsw);
 	//elm_widget_mirrored_automatic_set(pd->fs, EINA_FALSE);
 	// elm_fileselector_expandable_set(pd->fs, EINA_TRUE);
-	/* enable the fs file name entry */ 
+	/* enable the fs file name entry */
 	//elm_fileselector_is_save_set(pd->fs, EINA_TRUE);
 	evas_object_size_hint_weight_set(pd->fs, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(pd->fs, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	eo_event_callback_add(pd->fs, ELM_FILESELECTOR_EVENT_DONE, _selection_done, pd);
+	eo_event_callback_add(pd->fs, ELM_FILESELECTOR_EVENT_DONE, _selection_done_cb, pd);
 
 	evas_object_show(pd->fs);
 	elm_win_resize_object_add(pd->fsw, pd->fs);
@@ -141,11 +143,11 @@ _initialize_image_selector(Elm_Status_Data *pd)
 	static void
 _initialize_image(Eo *obj, Elm_Status_Data *pd)
 {
-	//use icon widget to load image 
+	//use icon widget to load image
 	pd->icon = elm_icon_add(obj);
 	evas_object_repeat_events_set(pd->icon, EINA_TRUE);
 	//although the icon widget provides basic image functionality
-	//the apis over icon are deprecated 
+	//the apis over icon are deprecated
 	//so we use image api to manage the image attributes
 	elm_image_resizable_set(pd->icon, EINA_TRUE, EINA_TRUE);
 	elm_image_smooth_set(pd->icon, EINA_TRUE);
@@ -154,7 +156,7 @@ _initialize_image(Eo *obj, Elm_Status_Data *pd)
 	elm_object_scale_set(pd->icon, elm_widget_scale_get(obj));
 	//evas_object_smart_callback_add(pd->icon, "clicked", _new_window_add,NULL);
 
-	//TODO 
+	//TODO
 	elm_icon_standard_set(pd->icon, "no_photo");
 	pd->picture = "no_photo";
 	//_initialize_image_selector(obj, pd);
@@ -162,12 +164,12 @@ _initialize_image(Eo *obj, Elm_Status_Data *pd)
 }
 
 
-static void 
+static void
 _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const char* source)
 {
 	Elm_Status_Data *pd =data;
 	printf("*****************");
-	
+
 	Evas_Object *txtObj = evas_object_name_find(obj,"elm.status.text.text");
 	printf("%x", txtObj);
 	if(!pd->editing_mode)
@@ -176,7 +178,7 @@ _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const ch
 		evas_object_show(pd->entry);
 	evas_object_hide(txtObj);
 	} else {
-		
+
 		pd->editing_mode = EINA_FALSE;
 	evas_object_show(txtObj);
 		evas_object_hide(pd->entry);
@@ -199,8 +201,8 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	// This must be added to have widget hierarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
-	//Since we are deriving from Elm.widget, 
-	// our resize object is actually null. we actually don;t use it. 
+	//Since we are deriving from Elm.widget,
+	// our resize object is actually null. we actually don;t use it.
 	// But now we are deriving from Elm.layout
 	// add object as a resize object for the window (controls window minimum
 	// size as well as gets resized if window is resized)
@@ -269,7 +271,7 @@ _elm_status_status_set(Eo *obj, Elm_Status_Data *pd, const char *txt)
 			EINA_LOG_WARN("could not set the text. "
 					"Maybe part 'text' does not exist?");
 		}
-		else { 
+		else {
 			Status_event_info *sei = {
 				SIG_STATUS_CHANGED,
 				pd->status,
@@ -298,7 +300,7 @@ _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.mood.message.text' does not exist?");
 	}
-	else{ 
+	else{
 		Status_event_info *sei = {
 			SIG_MOOD_CHANGED,
 			pd->mood,
