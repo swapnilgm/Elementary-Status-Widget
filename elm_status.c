@@ -26,6 +26,7 @@ typedef struct
 	const char * picture;
 	Evas_Object* icon;
 
+	Edje_Object *edje_obj;
 	/*file selector*/
 	Evas_Object* fs;
 	const char *fs_title;
@@ -117,7 +118,6 @@ _initialize_image_selector(Elm_Status_Data *pd)
 {
 
 	EINA_LOG_WARN("Adding new window ");
-	printf("%p", pd->fsw);
 	/* add file selector, in list mode */
 	pd->fs = elm_fileselector_add(pd->fsw);
 	//elm_widget_mirrored_automatic_set(pd->fs, EINA_FALSE);
@@ -168,19 +168,21 @@ _initialize_image(Eo *obj, Elm_Status_Data *pd)
 _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const char* source)
 {
 	Elm_Status_Data *pd =data;
-	printf("*****************");
 
-	Evas_Object *txtObj = evas_object_name_find(obj,"elm.status.text.text");
-	printf("%p", txtObj);
+	Evas_Object *textPart =	edje_object_part_object_get(pd->edje_obj, "elm.status.text.text");
+	printf("%p", textPart);
 	if(!pd->editing_mode)
 	{
+		EINA_LOG_WARN("Going in editing mode");
 		pd->editing_mode = EINA_TRUE;
+		//elm_entry_text_set(pd->entry,pd->status);
 		evas_object_show(pd->entry);
-		evas_object_hide(txtObj);
+		evas_object_hide(textPart);
 	} else {
 
+		EINA_LOG_WARN("Going in static mode");
 		pd->editing_mode = EINA_FALSE;
-		evas_object_show(txtObj);
+		evas_object_show(textPart);
 		evas_object_hide(pd->entry);
 	}
 }
@@ -190,6 +192,7 @@ _initialize_entry(Eo * obj, Elm_Status_Data *pd)
 {
 	pd->entry = elm_entry_add(obj);
 	elm_obj_entry_single_line_set(pd->entry, EINA_TRUE);
+//	elm_obj_entry_editable_set(pd->entry, EINA_TRUE);
 	evas_object_hide(pd->entry);
 }
 
@@ -202,6 +205,7 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	// This must be added to have widget hierarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
+	pd->edje_obj = wd->resize_obj;
 	//Since we are deriving from Elm.widget,
 	// our resize object is actually null. we actually don;t use it.
 	// But now we are deriving from Elm.layout
@@ -214,18 +218,17 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	else
 		EINA_LOG_DBG("Layout theme set to base.");
 
+	pd->editing_mode = EINA_FALSE;
 	_initialize_image(obj,pd);
 
-	Evas_Object *txtObj = evas_object_name_find(wd->resize_obj,"elm.status.text.text");
-	printf("asfgfggfdsdfsd %p", txtObj);
+	//Evas_Object *txtObj = evas_object_name_find(wd->resize_obj,"elm.status.text.text");
 	if(!pd->editing_mode){
 		//edje_object_part_swallow(wd->resize_obj,"elm.picture.selector",pd->fs);
 		edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
-}
+	}
 	_initialize_entry(obj, pd);
 	edje_object_part_swallow(wd->resize_obj,"elm.status.text.entry",pd->entry);
-	edje_object_signal_callback_add(wd->resize_obj, "text,edit", "elm.status.text.text",_status_clicked_cb, pd);
-	elm_layout_signal_callback_add(obj, "mouse,click", "elm.status.text.text", _status_clicked_cb, NULL);
+	elm_layout_signal_callback_add(obj, "mouse,clicked,*", "elm.status.text.text", _status_clicked_cb, pd);
 	evas_object_size_hint_align_set(pd->icon, EVAS_HINT_FILL,
 			EVAS_HINT_FILL);
 	evas_object_size_hint_weight_set(pd->icon, EVAS_HINT_EXPAND,
@@ -239,20 +242,6 @@ _elm_status_evas_object_smart_del(Eo *obj, Elm_Status_Data *pd)
 {
 	EINA_LOG_DBG(__func__);
 	evas_obj_smart_del(eo_super(obj, ELM_STATUS_CLASS));
-}
-
-	EOLIAN static Eina_Bool
-_elm_status_elm_widget_event(Eo *obj, Elm_Status_Data *pd, Evas_Object *source, Evas_Callback_Type type, void *event_info)
-{
-
-	EINA_LOG_WARN(__func__);
-}
-
-	EOLIAN static Eina_Bool
-_elm_status_elm_widget_theme_apply(Eo *obj, Elm_Status_Data *pd)
-{
-
-	EINA_LOG_WARN(__func__);
 }
 
 	EOLIAN static void

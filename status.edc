@@ -395,25 +395,21 @@ collections {
 			}
 		}
 		programs{
-			program {
-				signal: "mouse,clicked"; source: "elm.status.text.text";
-				action: STATE_SET "invisible" 0.0;
-				target: "elm.status.text.text";
-			}
-			program {
-				signal: "mouse,clicked"; source: "elm.status.text.text";
-				action: STATE_SET "visible" 0.0;
-				target: "elm.status.text.entry";
-			}
-			program {
-				signal: "mouse,clicked"; source: "elm.status.text.text";
-				action: SIGNAL_EMIT "text,edit" "elm.status.text.text";
-			}
+		//	program {
+	//			signal: "mouse,clicked"; source: "elm.status.text.text";
+	//			action: STATE_SET "invisible" 0.0;
+	///			target: "elm.status.text.text";
+	//		}
+	///		program {
+	//			signal: "mouse,clicked"; source: "elm.status.text.text";
+	//			action: STATE_SET "visible" 0.0;
+	//			target: "elm.status.text.entry";
+	///		}
+	///		program {
+	///			signal: "mouse,clicked"; source: "elm.status.text.text";
+	///			action: SIGNAL_EMIT "text,edit" "elm.status.text.text";
+	///		}
 			
-		}
-
-
-		programs {
 			program {
 				name: "mood,sad";
 				source: "";
