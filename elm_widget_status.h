@@ -12,13 +12,12 @@ typedef struct {
 	//event name i.e signal
 	const char *event_name;
 	//previous data specific to event object just before happening of event
-	void *priv_data;
+	const void *priv_data;
 	//new modifed data after execution of event
-	void* new_data;
+	const void* new_data;
 	//theme part name
 	const char *part_name;
-
-}Status_event_info;
+} Status_event_info;
 
 static const char *MOOD_TO_STR[] = {
 	"Happy",

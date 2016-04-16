@@ -52,7 +52,7 @@ class Elm.Status(Elm.Layout)
 			[[get the display pictue]]
 		}
 		values { // you can optionally specify keys and values in get/set too
-			picture: char*;
+			picture: const(char)*;
 		}
 	}
 	@property visibility  {

@@ -95,10 +95,6 @@ int main(int argc, char **argv)
 	/* first object */
 	Evas_Object *obj1 = elm_status_add(win);
 
-	elm_status_mood_set(obj1, MOOD_SAD);
-	elm_status_visibility_set(obj1, VISIBILITY_OFFLINE);
-	elm_status_picture_set(obj1, "../images/monk.png");
-
 	evas_object_resize(obj1, 700, 200);
 	evas_object_move(obj1, 100, 100);
 
@@ -112,10 +108,6 @@ int main(int argc, char **argv)
 	/////////////////////////////////////////////////////////////
 	/* second object */
 	Evas_Object *obj2 = elm_status_add(win);
-
-	elm_status_mood_set(obj2, MOOD_SAD);
-	elm_status_visibility_set(obj2, VISIBILITY_OFFLINE);
-	elm_status_picture_set(obj2, "../images/monk.png");
 
 	/* resize and move */
 	evas_object_resize(obj2, 700, 200);
