@@ -58,6 +58,7 @@ _picture_changed_cb(void *data, Evas_Object *obj,void *event_info)
 _edit_dblclick_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	EINA_LOG_WARN("called");
+
 	Evas_Object *status = (Evas_Object*)data;
 	elm_status_set(status, "hello there");
 	elm_status_mood_set(status, MOOD_EXCITED);
