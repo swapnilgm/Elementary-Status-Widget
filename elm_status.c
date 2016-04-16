@@ -170,20 +170,40 @@ _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const ch
 	Elm_Status_Data *pd =data;
 
 	Evas_Object *textPart =	edje_object_part_object_get(pd->edje_obj, "elm.status.text.text");
-	printf("%p", textPart);
-	if(!pd->editing_mode)
-	{
-		EINA_LOG_WARN("Going in editing mode");
-		pd->editing_mode = EINA_TRUE;
-		//elm_entry_text_set(pd->entry,pd->status);
-		evas_object_show(pd->entry);
-		evas_object_hide(textPart);
-	} else {
+	EINA_LOG_WARN("Going in editing mode");
+	pd->editing_mode = EINA_TRUE;
+//	elm_entry_entry_set(pd->entry, pd->status);
+	//elm_entry_text_set(pd->entry,pd->status);
+//	Evas_Coord *y,*w,*h;
+//	evas_object_geometry_get(textPart,NULL,NULL,w,h );
+//	evas_object_resize(textPart, 0, 0);
+	evas_object_hide(textPart);
+//	evas_object_resize(pd->entry, *w, *h);
+	evas_object_show(pd->entry);
 
+}
+
+	static Evas_Object_Event_Cb
+_entry_done_cb(void *data, Evas_Object *obj, void* ei)
+{
+	Elm_Status_Data *pd =data;
+
+	Evas_Object *textPart =	edje_object_part_object_get(pd->edje_obj, "elm.status.text.text");
+	printf("%p", textPart);
+	Evas_Event_Key_Down *ev = ei; 
+	printf("ev->key :: %s",ev->key);
+	if(!strcmp(ev->key,"sdfds"))
+	{
 		EINA_LOG_WARN("Going in static mode");
+		pd->status = elm_entry_entry_get(pd->entry);
 		pd->editing_mode = EINA_FALSE;
-		evas_object_show(textPart);
+
+//		Evas_Coord *w,*h;
+//		evas_object_geometry_get(pd->entry,NULL,NULL,w,h );
+///		evas_object_resize(textPart, *w, *h);
+//		evas_object_resize(pd->entry, 0, 0);
 		evas_object_hide(pd->entry);
+		evas_object_show(textPart);
 	}
 }
 
@@ -191,9 +211,11 @@ _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const ch
 _initialize_entry(Eo * obj, Elm_Status_Data *pd)
 {
 	pd->entry = elm_entry_add(obj);
+	evas_object_repeat_events_set(pd->entry, EINA_FALSE);
 	elm_obj_entry_single_line_set(pd->entry, EINA_TRUE);
-//	elm_obj_entry_editable_set(pd->entry, EINA_TRUE);
-	evas_object_hide(pd->entry);
+	//	elm_obj_entry_editable_set(pd->entry, EINA_TRUE);
+	elm_entry_entry_set(pd->entry, pd->status);
+	//	evas_object_hide(pd->entry);
 }
 
 	EOLIAN static void
@@ -218,7 +240,6 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	else
 		EINA_LOG_DBG("Layout theme set to base.");
 
-	pd->editing_mode = EINA_FALSE;
 	_initialize_image(obj,pd);
 
 	//Evas_Object *txtObj = evas_object_name_find(wd->resize_obj,"elm.status.text.text");
@@ -229,6 +250,7 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	_initialize_entry(obj, pd);
 	edje_object_part_swallow(wd->resize_obj,"elm.status.text.entry",pd->entry);
 	elm_layout_signal_callback_add(obj, "mouse,clicked,*", "elm.status.text.text", _status_clicked_cb, pd);
+	evas_object_event_callback_add(pd->entry, EVAS_CALLBACK_KEY_DOWN,  _entry_done_cb, pd);
 	evas_object_size_hint_align_set(pd->icon, EVAS_HINT_FILL,
 			EVAS_HINT_FILL);
 	evas_object_size_hint_weight_set(pd->icon, EVAS_HINT_EXPAND,

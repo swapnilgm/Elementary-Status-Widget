@@ -16,19 +16,19 @@ color_classes {
    	}
    	color_class
    	{
-   		name: "visibility.rect";
-   		color: 220 225 222 255;
-   	}
-   	color_class
-   	{
    		name: "mood.icon.rect";
-   		color: 220 220 0 127;
+   		color: 220 220 220 1;
    	}
    	color_class
    	{
-   		name: "visibility.icon.rect";
-   		color: 220 200 200 1;
+   		name: "visibility.rect";
+   		color: 220 220 220 255;
    	}
+//   	color_class
+//   	{
+//   		name: "label.rect";
+//   		color: 0 0 0 0;
+//   	}
    	color_class
    	{
    		name: "header";
@@ -47,20 +47,8 @@ color_classes {
    	}
    	color_class
    	{
-   		name: "visibility.text.green";
+   		name: "visibility.text";
    		color: 10 225 100 255;
-   		color2: 200 200 200 255;
-   	}
-   	color_class
-   	{
-   		name: "visibility.text.red";
-   		color: 225 10 100 255;
-   		color2: 200 200 200 255;
-   	}
-   	color_class
-   	{
-   		name: "visibility.text.yellow";
-   		color: 220 225 10 255;
    		color2: 200 200 200 255;
    	}
 }
@@ -69,9 +57,6 @@ images {
 	image: "emo-happy.png" COMP;
 	image: "emo-not-happy.png" COMP;
 	image: "emo-opensmile.png" COMP;
-	image: "led-circle-green.png" COMP;
-	image: "led-circle-yellow.png" COMP;
-	image: "led-circle-red.png" COMP;
 }
 
 collections {
@@ -156,7 +141,6 @@ collections {
 							text {
 								text: "Status:";
 								fit: 1 1;
-								min: 1 1;
 								size: 20;
 								align: 0 0.5;
 								ellipsis: 0.01;
@@ -191,8 +175,7 @@ collections {
 						text {
 							text: "up late... doing my CS630A project";
 							fit: 1 1;
-							min: 1 1;
-							size: 20;
+							size: 5;
 							align: 0 0.5;
 							ellipsis: 0.01;
 						}
@@ -209,6 +192,10 @@ collections {
 				part {
 					name: "elm.status.text.entry";
 					type: SWALLOW;
+					mouse_events : 1;
+					repeat_events : 1;
+
+					cursor_mode : BEFORE;
 					description {
 						state: "default" 0.0;
 						color_class: "status.text";
@@ -266,8 +253,7 @@ collections {
 						text {
 							text: "Mood:";
 							fit: 1 1;
-							min: 1 1;
-							size: 20;
+							size: 5;
 							align: 0 0.5;
 							ellipsis: 0.01;
 						}
@@ -301,10 +287,8 @@ collections {
 						text {
 							text: "annoyed like hell";
 							fit: 1 1;
-							min: 1 1;
-							size: 20;
+							size: 5;
 							align: 0 0.5;
-							ellipsis: 0.01;
 						}
 					}
 				}
@@ -373,44 +357,22 @@ collections {
 					type: RECT;
 					description {
 						state: "default" 0.0;
-						color_class: "visibility.icon.rect";
+						color: 255 127 0 127;
 
 					 	rel1.relative: 0.05 0.05;
 					 	rel2.relative: 0.3 0.95;
 					}
 					part {
 				 		name: "elm.visibility.icon.image";
-						type: IMAGE;
+						type: SWALLOW;
 						description {
 							state: "default" 0.0;
-							color: 255 255 255 255;
+							color: 255 255 255 127;
 
 							// the top left corner
 							rel1.relative: 0.1 0.1;
 							// the bottom right corner
 							rel2.relative: 0.9 0.9;
-							align: 0 0.5;
-
-							image { normal: "led-circle-green.png"; }
-
-						}
-						description {
-							state: "online" 1.0;
-							inherit: "default" 0.0;
-
-							image { normal: "led-circle-green.png"; }
-						}
-						description {
-							state: "offline" 1.0;
-							inherit: "default" 0.0;
-
-							image { normal: "led-circle-red.png"; }
-						}
-						description {
-							state: "away" 1.0;
-							inherit: "default" 0.0;
-
-							image { normal: "led-circle-yellow.png"; }
 						}
 					}
 				}
@@ -420,41 +382,18 @@ collections {
 					effect: GLOW;
 					entry_mode: PLAIN;
 					description {
-						state: "default" 0.0;
-						color_class: "visibility.text.green";
+						state: "default" 0.0; color_class: "visibility.text";
 
 						rel1.relative: 1.05 0;
 						rel1.to: "elm.visibility.icon.rect";
 
 						text {
-							text: "Unknown status";
+							text: "Online Now!";
 							fit: 1 1;
-							min: 1 1;
-							size: 20;
+							size: 5;
 							align: 0 0.5;
 							ellipsis: 0.01;
 						}
-					}
-					description {
-						state: "online" 1.0;
-						inherit: "default" 0.0;
-						color_class: "visibility.text.green";
-
-						text.text: "Online Now!";
-					}
-					description {
-						state: "offline" 1.0;
-						inherit: "default" 0.0;
-						color_class: "visibility.text.red";
-
-						text.text: "Offline";
-					}
-					description {
-						state: "away" 1.0;
-						inherit: "default" 0.0;
-						color_class: "visibility.text.yellow";
-
-						text.text: "Away";
 					}
 				}
 			}
@@ -481,22 +420,6 @@ collections {
 				signal: "load";
 				action: STATE_SET "sad" 0.5;
 				target: "elm.mood.icon.image";
-				transition: BOUNCE 2.5 0.0 5.0;
-			}
-			program {
-				name: "visibility,text,offline";
-				source: "";
-				signal: "load";
-				action: STATE_SET "online" 0.5;
-				target: "elm.visibility.text";
-				transition: BOUNCE 2.5 0.0 5.0;
-			}
-			program {
-				name: "visibility,image,offline";
-				source: "";
-				signal: "load";
-				action: STATE_SET "online" 0.5;
-				target: "elm.visibility.icon.image";
 				transition: BOUNCE 2.5 0.0 5.0;
 			}
 //			program {
