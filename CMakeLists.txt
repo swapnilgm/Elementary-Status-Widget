@@ -25,7 +25,7 @@ COMMAND eolian_gen -I /usr/share/eolian/include/eo-1 -I/usr/share/eolian/include
 )
 
 add_custom_command(OUTPUT edj_file
-	COMMAND edje_cc "${PROJECT_SOURCE_DIR}/status.edc" "status.edj"
+	COMMAND edje_cc -id "${PROJECT_SOURCE_DIR}/images" "${PROJECT_SOURCE_DIR}/status.edc" "status.edj"
 )
 
 add_custom_target(eo_file ALL

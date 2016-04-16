@@ -17,7 +17,7 @@ color_classes {
    	color_class
    	{
    		name: "mood.icon.rect";
-   		color: 22 22 22 255;
+   		color: 220 220 220 1;
    	}
    	color_class
    	{
@@ -51,6 +51,12 @@ color_classes {
    		color: 10 225 100 255;
    		color2: 200 200 200 255;
    	}
+}
+
+images {
+	image: "emo-happy.png" COMP;
+	image: "emo-not-happy.png" COMP;
+	image: "emo-opensmile.png" COMP;
 }
 
 collections {
@@ -137,6 +143,7 @@ collections {
 								fit: 1 1;
 								size: 20;
 								align: 0 0.5;
+								ellipsis: 0.01;
 							}
 						}
 					}
@@ -152,6 +159,7 @@ collections {
 //
 //						rel2.relative: 0.98 0.9;
 //	                    		}
+//				}
 				part {
 					name: "elm.status.text.text";
 					type: TEXT;
@@ -166,8 +174,9 @@ collections {
 						text {
 							text: "up late... doing my CS630A project";
 							fit: 1 1;
-							size: 20;
+							size: 5;
 							align: 0 0.5;
+							ellipsis: 0.01;
 						}
 					}
 					cursor_mode : BEFORE;
@@ -211,6 +220,7 @@ collections {
 //						rel1.relative: 0.02 0.1;
 //						rel2.relative: 0.25 0.9;
 //					}
+//				}
 				part {
 				 	name: "elm.mood.label.text";
 					type: TEXT;
@@ -224,12 +234,12 @@ collections {
 						text {
 							text: "Mood:";
 							fit: 1 1;
-							size: 20;
+							size: 5;
 							align: 0 0.5;
+							ellipsis: 0.01;
 						}
 					}
 				}
-//				}
 //				part {
 //					name: "elm.mood.message.rect";
 //					type: RECT;
@@ -242,6 +252,7 @@ collections {
 //
 //						rel2.relative: 0.8 0.9;
 //	                    		}
+//				}
 				part {
 					name: "elm.mood.message.text";
 					type: TEXT;
@@ -257,7 +268,7 @@ collections {
 						text {
 							text: "annoyed like hell";
 							fit: 1 1;
-							size: 20;
+							size: 5;
 							align: 0 0.5;
 						}
 					}
@@ -276,7 +287,7 @@ collections {
 					}
 					part {
 				 		name: "elm.mood.icon.image";
-						type: SWALLOW;
+						type: IMAGE;
 						description {
 							state: "default" 0.0;
 							color: 255 255 255 255;
@@ -285,6 +296,28 @@ collections {
 							rel1.relative: 0.1 0.1;
 							// the bottom right corner
 							rel2.relative: 0.9 0.9;
+							align: 0 0.5;
+
+							image { normal: "emo-happy.png"; }
+
+						}
+						description {
+							state: "happy" 1.0;
+							inherit: "default" 0.0;
+
+							image { normal: "emo-happy.png"; }
+						}
+						description {
+							state: "sad" 1.0;
+							inherit: "default" 0.0;
+
+							image { normal: "emo-not-happy.png"; }
+						}
+						description {
+							state: "excited" 1.0;
+							inherit: "default" 0.0;
+
+							image { normal: "emo-opensmile.png"; }
 						}
 					}
 				}
@@ -330,8 +363,7 @@ collections {
 					effect: GLOW;
 					entry_mode: PLAIN;
 					description {
-						state: "default" 0.0;
-						color_class: "visibility.text";
+						state: "default" 0.0; color_class: "visibility.text";
 
 						rel1.relative: 1.05 0;
 						rel1.to: "elm.visibility.icon.rect";
@@ -339,13 +371,40 @@ collections {
 						text {
 							text: "Online Now!";
 							fit: 1 1;
-							size: 10;
+							size: 5;
 							align: 0 0.5;
+							ellipsis: 0.01;
 						}
 					}
 				}
 			}
 		}
 
+		programs {
+			program {
+				name: "mood,sad";
+				source: "";
+				signal: "load";
+				action: STATE_SET "sad" 0.5;
+				target: "elm.mood.icon.image";
+				transition: BOUNCE 2.5 0.0 5.0;
+			}
+//			program {
+//				name: "mood,excited";
+//				source: "";
+//				signal: "mouse,clicked,*";
+//				action: STATE_SET "excited" 1.0;
+//				target: "elm.mood.icon.image";
+//				transition: BOUNCE 2.5 0.0 5.0;
+//			}
+//			program {
+//				name: "mood,happy";
+//				source: "";
+//				signal: "mouse,clicked,*";
+//				action: STATE_SET "happy" 1.0;
+//				target: "elm.mood.icon.image";
+//				transition: BOUNCE 2.5 0.0 5.0;
+//			}
      }
 }
+
