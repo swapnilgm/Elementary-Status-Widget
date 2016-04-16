@@ -55,15 +55,39 @@ _picture_changed_cb(void *data, Evas_Object *obj,void *event_info)
 }
 
 	static void
-_edit_dblclick_cb(void *data, Evas_Object *obj,void *event_info)
+_button_change_mood_cb(void *data, Evas_Object *obj,void *event_info)
+{
+	EINA_LOG_WARN("called");
+
+	Evas_Object *status = (Evas_Object*)data;
+	elm_status_mood_set(status, MOOD_EXCITED);
+}
+
+	static void
+_button_change_status_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	EINA_LOG_WARN("called");
 
 	Evas_Object *status = (Evas_Object*)data;
 	elm_status_set(status, "hello there");
-	elm_status_mood_set(status, MOOD_EXCITED);
-	elm_status_picture_set(status, "../images/Start_IT.png");
+}
+
+	static void
+_button_change_visibility_cb(void *data, Evas_Object *obj,void *event_info)
+{
+	EINA_LOG_WARN("called");
+
+	Evas_Object *status = (Evas_Object*)data;
 	elm_status_visibility_set(status, VISIBILITY_OFFLINE);
+}
+
+	static void
+_button_change_picture_cb(void *data, Evas_Object *obj,void *event_info)
+{
+	EINA_LOG_WARN("called");
+
+	Evas_Object *status = (Evas_Object*)data;
+	elm_status_picture_set(status, "../images/monk.png");
 }
 
 
@@ -72,8 +96,8 @@ int main(int argc, char **argv)
 	if (!elm_init(argc, argv))
 		return -1;
 
-	const int WIDGET_WIDTH = 400;
-	const int WIDGET_HEIGHT = 150;
+	const int WIDGET_WIDTH = 500;
+	const int WIDGET_HEIGHT = 250;
 
 	/* window object */
 	Evas_Object *win;
@@ -126,26 +150,44 @@ int main(int argc, char **argv)
 	evas_object_show(obj2);
 
 	/////////////////////////////////////////////////////////////
-	/* text entry1 */
-	Evas_Object *entry1 = elm_entry_add(win);
-	elm_entry_autosave_set(entry1, EINA_FALSE);
-	/* elm_entry_file_set(entry1,"/tmp/en.txt",ELM_TEXT_FORMAT_MARKUP_UTF8); */
-	elm_object_text_set(entry1, "Change Status");
-	evas_object_resize(entry1, 400, 50);
-	evas_object_move(entry1, 0, 0);
-	evas_object_show(entry1);
-	evas_object_smart_callback_add(entry1,"clicked,double",_edit_dblclick_cb,obj1);
+
+	Evas_Object *button1 = elm_button_add(win);
+	elm_object_text_set(button1, "Change Status");
+	evas_object_smart_callback_add(button1,"clicked",_button_change_status_cb,obj1);
+
+	evas_object_resize(button1, 100, 40);
+	evas_object_move(button1, 0, 0);
+	evas_object_show(button1);
 
 	/////////////////////////////////////////////////////////////
-	/* text entry2 */
-	Evas_Object *entry2 = elm_entry_add(win);
-	elm_entry_autosave_set(entry2, EINA_FALSE);
-	/* elm_entry_file_set(entry2,"/tmp/en.txt",ELM_TEXT_FORMAT_MARKUP_UTF8); */
-	elm_object_text_set(entry2, "Change Status");
-	evas_object_resize(entry2, 400, 50);
-	evas_object_move(entry2, 500, 0);
-	evas_object_show(entry2);
-	evas_object_smart_callback_add(entry2,"clicked,double",_edit_dblclick_cb,obj2);
+
+	Evas_Object *button2 = elm_button_add(win);
+	elm_object_text_set(button2, "Change Mood");
+	evas_object_smart_callback_add(button2,"clicked",_button_change_mood_cb,obj1);
+
+	evas_object_resize(button2, 100, 40);
+	evas_object_move(button2, 100, 0);
+	evas_object_show(button2);
+
+	/////////////////////////////////////////////////////////////
+
+	Evas_Object *button3 = elm_button_add(win);
+	elm_object_text_set(button3, "Change visibility");
+	evas_object_smart_callback_add(button3,"clicked",_button_change_visibility_cb,obj1);
+
+	evas_object_resize(button3, 100, 40);
+	evas_object_move(button3, 200, 0);
+	evas_object_show(button3);
+
+	/////////////////////////////////////////////////////////////
+
+	Evas_Object *button4 = elm_button_add(win);
+	elm_object_text_set(button4, "Change picture");
+	evas_object_smart_callback_add(button4,"clicked",_button_change_picture_cb,obj1);
+
+	evas_object_resize(button4, 100, 40);
+	evas_object_move(button4, 300, 0);
+	evas_object_show(button4);
 
 	/////////////////////////////////////////////////////////////
 	/* set window size to (400,400) */

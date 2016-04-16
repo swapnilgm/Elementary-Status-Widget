@@ -10,12 +10,15 @@
 #include <elm_layout.h>
 #include <elm_widget_layout.h>
 #include "elm_widget_status.h"
+#include <string.h>
 
 #define MY_CLASS ELM_STATUS_CLASS
 #define MY_CLASS_NAME_LEGACY "elm_status"
 
 #define ENUM_TO_STRING(en) #en
 #define CRI printf
+
+#define SIGNAL_SIZE 20
 
 typedef struct
 {
@@ -255,10 +258,8 @@ _elm_status_class_constructor(Eo_Class *klass)
 _elm_status_status_set(Eo *obj, Elm_Status_Data *pd, const char *txt)
 {
 	EINA_LOG_DBG("%s",txt);
-	if (txt)
-	{
-		if (!elm_obj_layout_text_set(obj,"elm.status.text.text", txt))
-		{
+	if (txt) {
+		if (!elm_obj_layout_text_set(obj,"elm.status.text.text", txt)) {
 			EINA_LOG_WARN("could not set the text. "
 					"Maybe part 'text' does not exist?");
 		}
@@ -285,13 +286,17 @@ _elm_status_status_get(Eo *obj, Elm_Status_Data *pd)
 	EOLIAN static void
 _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 {
+	char signal[SIGNAL_SIZE] = "mood_";
+	strncat(signal, MOOD_TO_STR[mood], SIGNAL_SIZE-1);
 
-	if (!elm_obj_layout_text_set(obj,"elm.mood.message.text", "mood"+mood))
+	if (!elm_obj_layout_text_set(obj,"elm.mood.message.text", MOOD_TO_STR[mood]))
 	{
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.mood.message.text' does not exist?");
 	}
 	else {
+		EINA_LOG_WARN("sending signal to edje: %s", signal);
+		edje_object_signal_emit(pd->edje_obj, signal, "");
 		Status_event_info sei = {
 			SIG_MOOD_CHANGED,
 			&pd->mood,
@@ -322,13 +327,25 @@ elm_status_add(Evas_Object *parent)
 	EOLIAN static void
 _elm_status_visibility_set(Eo *obj, Elm_Status_Data *pd, VISIBILITY visibility)
 {
-	EINA_LOG_DBG(__func__);
-	if (!elm_obj_layout_text_set(obj,"elm.visibility.text", "visibid"+visibility))
+	EINA_LOG_WARN("called with %s", VISIBILITY_TO_STR[visibility]);
+
+	char signal[SIGNAL_SIZE] = "visibility_";
+	strncat(signal, VISIBILITY_TO_STR[visibility], SIGNAL_SIZE-1);
+
+	if (!elm_obj_layout_text_set(obj,"elm.visibility.text", VISIBILITY_TO_STR[visibility]))
 	{
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.visibility.text' does not exist?");
 	}
 	else {
+		int pad_len = strlen(signal);
+		strcpy(signal+pad_len, "_txt");
+		EINA_LOG_WARN("sending signal to edje: %s", signal);
+		edje_object_signal_emit(pd->edje_obj, signal, "");
+		strcpy(signal+pad_len, "_image");
+		EINA_LOG_WARN("sending signal to edje: %s", signal);
+		edje_object_signal_emit(pd->edje_obj, signal, "");
+
 		Status_event_info sei = {
 			SIG_VISIBILITY_CHANGED,
 			&pd->visibility,

@@ -42,6 +42,11 @@ color_classes {
    	}
    	color_class
    	{
+   		name: "status.entry";
+   		color: 10 100 100 255;
+   	}
+   	color_class
+   	{
    		name: "mood.text";
    		color: 100 100 100 255;
    	}
@@ -163,7 +168,6 @@ collections {
 							}
 						}
 					}
-//				}
 //				part {
 //					name: "elm.status.text.rect";
 //					type: RECT;
@@ -197,7 +201,7 @@ collections {
 							ellipsis: 0.01;
 						}
 					}
-					description { 
+					description {
 						state: "invisible" 0.0;
 						inherit: "default" 0.0;
 						visible: 0;
@@ -211,17 +215,19 @@ collections {
 					type: SWALLOW;
 					description {
 						state: "default" 0.0;
-						color_class: "status.text";
+						color_class: "status.entry";
 						visible : 0;
 
 						rel1.relative: 1.1 0;
 						rel1.to: "elm.status.label.text";
 						rel2.relative: 0.98 0.9;
-						
+
 					}
-					description { 
+					description {
 						state: "visible" 0.0;
 						inherit: "default" 0.0;
+
+						color_class: "status.entry";
 						visible: 1;
 						align: 0.0 0.0;
 					 }
@@ -289,7 +295,6 @@ collections {
 				part {
 					name: "elm.mood.message.text";
 					type: TEXT;
-					entry_mode: PLAIN;
 					description {
 						state: "default" 0.0;
 						color_class: "mood.text";
@@ -334,7 +339,6 @@ collections {
 							align: 0 0.5;
 
 							image { normal: "emo-happy.png"; }
-
 						}
 						description {
 							state: "happy" 1.0;
@@ -418,7 +422,6 @@ collections {
 				 	name: "elm.visibility.text";
 					type: TEXT;
 					effect: GLOW;
-					entry_mode: PLAIN;
 					description {
 						state: "default" 0.0;
 						color_class: "visibility.text.green";
@@ -439,82 +442,94 @@ collections {
 						state: "online" 1.0;
 						inherit: "default" 0.0;
 						color_class: "visibility.text.green";
-
-						text.text: "Online Now!";
 					}
 					description {
 						state: "offline" 1.0;
 						inherit: "default" 0.0;
 						color_class: "visibility.text.red";
-
-						text.text: "Offline";
 					}
 					description {
 						state: "away" 1.0;
 						inherit: "default" 0.0;
 						color_class: "visibility.text.yellow";
-
-						text.text: "Away";
 					}
 				}
 			}
 		}
 		programs{
-		//	program {
-	//			signal: "mouse,clicked"; source: "elm.status.text.text";
-	//			action: STATE_SET "invisible" 0.0;
-	///			target: "elm.status.text.text";
-	//		}
-	///		program {
-	//			signal: "mouse,clicked"; source: "elm.status.text.text";
-	//			action: STATE_SET "visible" 0.0;
-	//			target: "elm.status.text.entry";
-	///		}
-	///		program {
-	///			signal: "mouse,clicked"; source: "elm.status.text.text";
-	///			action: SIGNAL_EMIT "text,edit" "elm.status.text.text";
-	///		}
-			
 			program {
 				name: "mood,sad";
 				source: "";
-				signal: "load";
+				signal: "mood_Sad";
 				action: STATE_SET "sad" 0.5;
 				target: "elm.mood.icon.image";
-				transition: BOUNCE 2.5 0.0 5.0;
+				transition: BOUNCE 1.0 0.0 3.0;
 			}
 			program {
-				name: "visibility,text,offline";
+				name: "mood,excited";
 				source: "";
-				signal: "load";
-				action: STATE_SET "online" 0.5;
-				target: "elm.visibility.text";
-				transition: BOUNCE 2.5 0.0 5.0;
+				signal: "mood_Excited";
+				action: STATE_SET "excited" 1.0;
+				target: "elm.mood.icon.image";
+				transition: BOUNCE 1.0 0.0 3.0;
+			}
+			program {
+				name: "mood,happy";
+				source: "";
+				signal: "mood_Happy";
+				action: STATE_SET "happy" 1.0;
+				target: "elm.mood.icon.image";
+				transition: BOUNCE 1.0 0.0 3.0;
 			}
 			program {
 				name: "visibility,image,offline";
 				source: "";
-				signal: "load";
+				signal: "visibility_Offline_image";
+				action: STATE_SET "offline" 0.5;
+				target: "elm.visibility.icon.image";
+				transition: BOUNCE 1.0 0.0 3.0;
+			}
+			program {
+				name: "visibility,image,online";
+				source: "";
+				signal: "visibility_Online_image";
 				action: STATE_SET "online" 0.5;
 				target: "elm.visibility.icon.image";
-				transition: BOUNCE 2.5 0.0 5.0;
+				transition: BOUNCE 1.0 0.0 3.0;
 			}
-//			program {
-//				name: "mood,excited";
-//				source: "";
-//				signal: "mouse,clicked,*";
-//				action: STATE_SET "excited" 1.0;
-//				target: "elm.mood.icon.image";
-//				transition: BOUNCE 2.5 0.0 5.0;
-//			}
-//			program {
-//				name: "mood,happy";
-//				source: "";
-//				signal: "mouse,clicked,*";
-//				action: STATE_SET "happy" 1.0;
-//				target: "elm.mood.icon.image";
-//				transition: BOUNCE 2.5 0.0 5.0;
-//			}
-     }
+			program {
+				name: "visibility,image,away";
+				source: "";
+				signal: "visibility_Away_image";
+				action: STATE_SET "away" 0.5;
+				target: "elm.visibility.icon.image";
+				transition: BOUNCE 1.0 0.0 3.0;
+			}
+			program {
+				name: "visibility,text,offline";
+				source: "";
+				signal: "visibility_Offline_txt";
+				action: STATE_SET "offline" 0.5;
+				target: "elm.visibility.text";
+				transition: BOUNCE 1.0 0.0 3.0;
+			}
+			program {
+				name: "visibility,text,online";
+				source: "";
+				signal: "visibility_Online_txt";
+				action: STATE_SET "online" 0.5;
+				target: "elm.visibility.text";
+				transition: BOUNCE 1.0 0.0 3.0;
+			}
+			program {
+				name: "visibility,text,away";
+				source: "";
+				signal: "visibility_Away_txt";
+				action: STATE_SET "away" 0.5;
+				target: "elm.visibility.text";
+				transition: BOUNCE 1.0 0.0 3.0;
+			}
+		}
+	}
 }
 
