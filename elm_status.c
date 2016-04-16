@@ -66,7 +66,7 @@ _elm_status_eo_base_destructor(Eo *obj, Elm_Status_Data *pd)
 }
 
 	static Eina_Bool
-_selection_done(void *data, const Eo_Event *event)
+_selection_done_cb(void *data, const Eo_Event *event)
 {
 	Elm_Status_Data *sd = data;
 	const char *file = event->event_info;
@@ -98,7 +98,7 @@ _new_window_add(Elm_Status_Data *pd)
 	win = elm_win_add(NULL, "imageselector", ELM_WIN_DIALOG_BASIC);
 	elm_win_title_set(win, "Change image");
 	elm_win_autodel_set(win, EINA_TRUE);
-	eo_event_callback_add(win, ELM_WIN_EVENT_DELETE_REQUEST, _selection_done, pd);
+	eo_event_callback_add(win, ELM_WIN_EVENT_DELETE_REQUEST, _selection_done_cb, pd);
 	bg = elm_bg_add(win);
 	evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_win_resize_object_add(win, bg);
@@ -213,8 +213,8 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 
 	_initialize_image(obj,pd);
 
-	Evas_Object *txtObj = evas_object_name_find(wd->resize_obj,"elm.status.text.text");
-	printf("asfgfggfdsdfsd%x", txtObj);
+	Evas_Object *txtObj = evas_object_name_find(obj,"elm.status.text.text");
+printf("asfgfggfdsdfsd%x", txtObj);
 	if(!pd->editing_mode)
 	//edje_object_part_swallow(wd->resize_obj,"elm.picture.selector",pd->fs);
 	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
