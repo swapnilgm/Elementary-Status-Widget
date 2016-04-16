@@ -100,7 +100,6 @@ _selection_done_cb(void *data, const Eo_Event *event)
 			evas_object_smart_callback_call(sd->obj,SIG_PICTURE_CHANGED, "elm.picture.image");
 			strncpy(sd->picture, file, PATH_MAX);
 		}
-
 	}
 
 	del = sd->fsw;
@@ -114,7 +113,6 @@ _selection_done_cb(void *data, const Eo_Event *event)
 	void
 _initialize_image_selector(Elm_Status_Data *pd)
 {
-	EINA_LOG_WARN("Adding new window ");
 	/* add file selector, in list mode */
 	pd->fs = elm_fileselector_add(pd->fsw);
 	//elm_widget_mirrored_automatic_set(pd->fs, EINA_FALSE);
@@ -130,12 +128,9 @@ _initialize_image_selector(Elm_Status_Data *pd)
 	elm_win_resize_object_add(pd->fsw, pd->fs);
 }
 
-
-
 	static void
 _new_window_add_cb(void *data, Evas_Object *obj, void *ei)
 {
-	EINA_LOG_WARN("Adding ner window");
 	Evas_Object *win, *bg;
 	Elm_Status_Data *pd =data;
 
@@ -151,8 +146,6 @@ _new_window_add_cb(void *data, Evas_Object *obj, void *ei)
 	_initialize_image_selector(pd);
 	evas_object_show(win);
 }
-
-
 
 /**
  * Private function Just to manage initial image loading parameters
@@ -177,8 +170,6 @@ _initialize_image(Eo *obj, Elm_Status_Data *pd)
 	//TODO
 	elm_icon_standard_set(pd->icon, "no_photo");
 	strncpy(pd->picture, "no_photo", PATH_MAX);
-	//_initialize_image_selector(obj, pd);
-
 }
 
 
@@ -275,6 +266,7 @@ static Eina_Bool _set_visibility(Eo* obj, Elm_Status_Data* pd, VISIBILITY visibi
 
 		strcpy(signal+pad_len, "_image");
 		edje_object_signal_emit(pd->edje_obj, signal, "");
+
 		pd->visibility = visibility;
 	}
 	else {
@@ -383,7 +375,6 @@ _elm_status_mood_get(Eo *obj, Elm_Status_Data *pd)
 	EAPI Evas_Object *
 elm_status_add(Evas_Object *parent)
 {
-	EINA_LOG_DBG(__func__);
 	EINA_SAFETY_ON_NULL_RETURN_VAL(parent, NULL);
 	Evas_Object *obj = eo_add(MY_CLASS, parent);
 	return obj;

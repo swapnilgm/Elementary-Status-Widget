@@ -4,6 +4,7 @@
 #include<Elementary.h>
 #include<Eo.h>
 #include<Evas.h>
+
 /*Event Info to pass to smart callbacks
  *
  * Move this to some header files
@@ -30,7 +31,6 @@ static const char *VISIBILITY_TO_STR[] = {
 	"Offline",
 	"Away"
 };
-
 
 static const char SIG_CLICKED[] = "clicked";
 static const char SIG_PICTURE_CHANGED[] = "picture,changed";
