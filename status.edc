@@ -121,6 +121,7 @@ collections {
 //						rel1.relative: 0.02 0.1;
 //						rel2.relative: 0.25 0.9;
 //					}
+//				}
 					part {
 				 		name: "elm.status.label.text";
 						type: TEXT;
@@ -201,29 +202,6 @@ collections {
 
 					mouse_events : 1;
 				}
-				part {
-					name: "elm.status.text.edit";
-					type: TEXT;
-					multiline: 1;
-					description {
-						state: "default" 0.0;
-						color_class: "status.text";
-
-						rel1.relative: 1.1 0;
-						rel1.to: "elm.status.label.text";
-						rel2.relative: 0.98 0.9;
-						text {
-							text: "up late... doing my CS630A project";
-							fit: 1 1;
-							size: 20;
-							align: 0 0.5;
-						}
-					}
-					cursor_mode : BEFORE;
-					mouse_events : 1;
-				}
-
-//				}
 			} // end status border
 
 			// mood border
@@ -376,13 +354,12 @@ collections {
 						text {
 							text: "Online Now!";
 							fit: 1 1;
-							size: 20;
+							size: 10;
 							align: 0 0.5;
 						}
 					}
 				}
 			}
-
 		}
 		programs{
 			program {

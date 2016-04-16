@@ -20,10 +20,10 @@
 typedef struct
 {
 	int temp;
-	char *status;
+	const char *status;
 	MOOD mood;
 	VISIBILITY visibility;
-	char * picture;
+	const char * picture;
 	Evas_Object* icon;
 
 	/*file selector*/
@@ -33,7 +33,7 @@ typedef struct
 	Evas_Object* fsw;
 	Evas_Object* entry;
 	Eina_Bool editing_mode;
-}Elm_Status_Data;
+} Elm_Status_Data;
 
 /* smart callbacks coming from elm button objects (besides the ones
  * coming from elm layout): */
@@ -85,8 +85,8 @@ _selection_done_cb(void *data, const Eo_Event *event)
 	sd->fs = NULL;
 	sd->fsw = NULL;
 	evas_object_del(del);
-	//	eo_event_callback_call
-	//		(sd->obj, ELM_FILESELECTOR_EVENT_FILE_CHOSEN, (void *)file);
+//	eo_event_callback_call
+//		(sd->obj, ELM_FILESELECTOR_EVENT_FILE_CHOSEN, (void *)file);
 
 	return EINA_TRUE;
 }
@@ -171,7 +171,7 @@ _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const ch
 	printf("*****************");
 
 	Evas_Object *txtObj = evas_object_name_find(obj,"elm.status.text.text");
-	printf("%x", txtObj);
+	printf("%p", txtObj);
 	if(!pd->editing_mode)
 	{
 		pd->editing_mode = EINA_TRUE;
@@ -241,6 +241,19 @@ _elm_status_evas_object_smart_del(Eo *obj, Elm_Status_Data *pd)
 	evas_obj_smart_del(eo_super(obj, ELM_STATUS_CLASS));
 }
 
+	EOLIAN static Eina_Bool
+_elm_status_elm_widget_event(Eo *obj, Elm_Status_Data *pd, Evas_Object *source, Evas_Callback_Type type, void *event_info)
+{
+
+	EINA_LOG_WARN(__func__);
+}
+
+	EOLIAN static Eina_Bool
+_elm_status_elm_widget_theme_apply(Eo *obj, Elm_Status_Data *pd)
+{
+
+	EINA_LOG_WARN(__func__);
+}
 
 	EOLIAN static void
 _elm_status_class_constructor(Eo_Class *klass)
@@ -289,7 +302,7 @@ _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.mood.message.text' does not exist?");
 	}
-	else{
+	else {
 		Status_event_info sei = {
 			SIG_MOOD_CHANGED,
 			&pd->mood,
@@ -327,7 +340,7 @@ _elm_status_visibility_set(Eo *obj, Elm_Status_Data *pd, VISIBILITY visibility)
 				"Maybe part 'elm.visibility.text' does not exist?");
 	}
 	else {
-		Status_event_info *sei = {
+		Status_event_info sei = {
 			SIG_VISIBILITY_CHANGED,
 			&pd->visibility,
 			&visibility,
@@ -350,7 +363,7 @@ _elm_status_visibility_get(Eo *obj, Elm_Status_Data *pd)
  *
  */
 	EOLIAN static void
-_elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, char *picture)
+_elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, const char *picture)
 {
 	EINA_LOG_DBG(__func__);
 	if (picture)
@@ -361,7 +374,7 @@ _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, char *picture)
 			EINA_LOG_WARN("could not set the image." );
 		}
 		else {
-			Status_event_info *sei = {
+			Status_event_info sei = {
 				SIG_PICTURE_CHANGED,
 				pd->picture,
 				picture,
@@ -373,7 +386,7 @@ _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, char *picture)
 	}
 }
 
-	EOLIAN static char *
+	EOLIAN static const char *
 _elm_status_picture_get(Eo *obj, Elm_Status_Data *pd)
 {
 	EINA_LOG_DBG(__func__);
