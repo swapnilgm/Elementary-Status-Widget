@@ -186,11 +186,12 @@ _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const ch
 }
 
 	static void
-	_initialize_entry(Eo * obj, Elm_Status_Data *pd)
+_initialize_entry(Eo * obj, Elm_Status_Data *pd)
 {
-pd->entry = elm_entry_add(obj);
-evas_object_hide(pd->entry);
-	}
+	pd->entry = elm_entry_add(obj);
+	evas_object_hide(pd->entry);
+	elm_obj_entry_single_line_set(pd->entry, EINA_TRUE);
+}
 
 	EOLIAN static void
 _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)

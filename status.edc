@@ -121,6 +121,7 @@ collections {
 //						rel1.relative: 0.02 0.1;
 //						rel2.relative: 0.25 0.9;
 //					}
+//				}
 					part {
 				 		name: "elm.status.label.text";
 						type: TEXT;
@@ -139,7 +140,6 @@ collections {
 							}
 						}
 					}
-//				}
 //				part {
 //					name: "elm.status.text.rect";
 //					type: RECT;
@@ -173,7 +173,20 @@ collections {
 					cursor_mode : BEFORE;
 					mouse_events : 1;
 				}
-//				}
+				part {
+					name: "elm.status.text.entry";
+					type: SWALLOW;
+					multiline: 1;
+					description {
+						state: "default" 0.0;
+						color_class: "status.text";
+
+						rel1.relative: 1.1 0;
+						rel1.to: "elm.status.label.text";
+						rel2.relative: 0.98 0.9;
+					}
+					mouse_events : 1;
+				}
 			} // end status border
 
 			// mood border
@@ -326,7 +339,7 @@ collections {
 						text {
 							text: "Online Now!";
 							fit: 1 1;
-							size: 20;
+							size: 10;
 							align: 0 0.5;
 						}
 					}
