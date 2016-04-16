@@ -72,6 +72,9 @@ int main(int argc, char **argv)
 	if (!elm_init(argc, argv))
 		return -1;
 
+	const int WIDGET_WIDTH = 400;
+	const int WIDGET_HEIGHT = 150;
+
 	/* window object */
 	Evas_Object *win;
 
@@ -96,7 +99,7 @@ int main(int argc, char **argv)
 	/* first object */
 	Evas_Object *obj1 = elm_status_add(win);
 
-	evas_object_resize(obj1, 700, 200);
+	evas_object_resize(obj1, WIDGET_WIDTH, WIDGET_HEIGHT);
 	evas_object_move(obj1, 100, 100);
 
 	evas_object_smart_callback_add(obj1, SIG_STATUS_CHANGED , _status_changed_cb, NULL);
@@ -111,7 +114,7 @@ int main(int argc, char **argv)
 	Evas_Object *obj2 = elm_status_add(win);
 
 	/* resize and move */
-	evas_object_resize(obj2, 700, 200);
+	evas_object_resize(obj2, WIDGET_WIDTH, WIDGET_HEIGHT);
 	evas_object_move(obj2, 100, 400);
 
 	evas_object_smart_callback_add(obj2, SIG_STATUS_CHANGED , _status_changed_cb, NULL);
