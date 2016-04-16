@@ -1,8 +1,3 @@
-1. correctify iamge api
-2. add smart object events
-3. check popup, genlist ,gengrid
-4. Do layout decoration
-5. Add effects
-6. Modify test  application with other function
-7 Merge with elementary
-
+* Resolve the entry widget bug
+* Add popups for status, mood and visibility
+* Ambitious: Merge with elementary?
