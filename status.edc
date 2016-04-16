@@ -26,6 +26,21 @@ collections {
 						rel2.relative: 0.8 0.8;
 					}
 				}
+				part {
+				 	name: "elm.picture.selector";
+					type: SWALLOW;
+					mouse_events : 1;
+
+					description {
+						state: "default" 0.0;
+						color: 255 255 255 255;
+
+						// the top left corner
+						rel1.relative: 0.2 0.2;
+						// the bottom right corner
+						rel2.relative: 0.8 0.8;
+					}
+				}
 			} // end picture border
 
 			// status border
@@ -101,6 +116,19 @@ collections {
 							}
 						}
 						cursor_mode : BEFORE;
+						mouse_events : 1;
+					}
+					part {
+						name: "elm.status.text.entry";
+						type: SWALLOW;
+						multiline: 1;
+						description {
+							state: "default" 0.0;
+							color: 255 255 255 255;
+
+							rel1.relative: 0.1 0.1;
+							rel2.relative: 0.9 0.9;
+						}
 						mouse_events : 1;
 					}
 				}
