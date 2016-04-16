@@ -94,6 +94,7 @@ int main(int argc, char **argv)
 	elm_win_focus_highlight_enabled_set(win, EINA_TRUE);
 
 	/* initialize status widget with `win` as parent */
+	Evas_Object *obj = elm_status_add(win);
 
 	/////////////////////////////////////////////////////////////
 	/* first object */

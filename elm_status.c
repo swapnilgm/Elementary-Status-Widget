@@ -26,6 +26,7 @@ typedef struct
 	const char * picture;
 	Evas_Object* icon;
 
+	Edje_Object *edje_obj;
 	/*file selector*/
 	Evas_Object* fs;
 	const char *fs_title;
@@ -85,34 +86,10 @@ _selection_done_cb(void *data, const Eo_Event *event)
 	sd->fs = NULL;
 	sd->fsw = NULL;
 	evas_object_del(del);
-//	eo_event_callback_call
-//		(sd->obj, ELM_FILESELECTOR_EVENT_FILE_CHOSEN, (void *)file);
+	//	eo_event_callback_call
+	//		(sd->obj, ELM_FILESELECTOR_EVENT_FILE_CHOSEN, (void *)file);
 
 	return EINA_TRUE;
-}
-
-
-	void
-_initialize_image_selector(Elm_Status_Data *pd)
-{
-
-	EINA_LOG_WARN("Adding new iwndow ");
-	printf("%p", pd->fsw);
-	/* add file selector, in list mode */
-	pd->fs = elm_fileselector_add(pd->fsw);
-	//elm_widget_mirrored_automatic_set(pd->fs, EINA_FALSE);
-	// elm_fileselector_expandable_set(pd->fs, EINA_TRUE);
-	/* enable the fs file name entry */
-	//elm_fileselector_is_save_set(pd->fs, EINA_TRUE);
-	evas_object_size_hint_weight_set(pd->fs, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(pd->fs, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	eo_event_callback_add(pd->fs, ELM_FILESELECTOR_EVENT_DONE, _selection_done_cb, pd);
-
-	evas_object_show(pd->fs);
-	elm_win_resize_object_add(pd->fsw, pd->fs);
-
-	//	evas_object_hide(pd->fs;
-
 }
 
 
@@ -134,6 +111,29 @@ _new_window_add(Elm_Status_Data *pd)
 	evas_object_show(win);
 }
 
+
+
+	void
+_initialize_image_selector(Elm_Status_Data *pd)
+{
+
+	EINA_LOG_WARN("Adding new window ");
+	/* add file selector, in list mode */
+	pd->fs = elm_fileselector_add(pd->fsw);
+	//elm_widget_mirrored_automatic_set(pd->fs, EINA_FALSE);
+	// elm_fileselector_expandable_set(pd->fs, EINA_TRUE);
+	/* enable the fs file name entry */
+	//elm_fileselector_is_save_set(pd->fs, EINA_TRUE);
+	evas_object_size_hint_weight_set(pd->fs, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(pd->fs, EVAS_HINT_FILL, EVAS_HINT_FILL);
+	eo_event_callback_add(pd->fs, ELM_FILESELECTOR_EVENT_DONE, _selection_done_cb, pd);
+
+	evas_object_show(pd->fs);
+	elm_win_resize_object_add(pd->fsw, pd->fs);
+
+	//	evas_object_hide(pd->fs;
+
+}
 
 
 /**
@@ -164,23 +164,25 @@ _initialize_image(Eo *obj, Elm_Status_Data *pd)
 }
 
 
-static void
+	static void
 _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const char* source)
 {
 	Elm_Status_Data *pd =data;
-	printf("*****************");
 
-	Evas_Object *txtObj = evas_object_name_find(obj,"elm.status.text.text");
-	printf("%p", txtObj);
+	Evas_Object *textPart =	edje_object_part_object_get(pd->edje_obj, "elm.status.text.text");
+	printf("%p", textPart);
 	if(!pd->editing_mode)
 	{
+		EINA_LOG_WARN("Going in editing mode");
 		pd->editing_mode = EINA_TRUE;
+		//elm_entry_text_set(pd->entry,pd->status);
 		evas_object_show(pd->entry);
-	evas_object_hide(txtObj);
+		evas_object_hide(textPart);
 	} else {
 
+		EINA_LOG_WARN("Going in static mode");
 		pd->editing_mode = EINA_FALSE;
-	evas_object_show(txtObj);
+		evas_object_show(textPart);
 		evas_object_hide(pd->entry);
 	}
 }
@@ -189,8 +191,9 @@ _status_clicked_cb(void *data, Evas_Object *obj, const char * emission, const ch
 _initialize_entry(Eo * obj, Elm_Status_Data *pd)
 {
 	pd->entry = elm_entry_add(obj);
-	evas_object_hide(pd->entry);
 	elm_obj_entry_single_line_set(pd->entry, EINA_TRUE);
+//	elm_obj_entry_editable_set(pd->entry, EINA_TRUE);
+	evas_object_hide(pd->entry);
 }
 
 	EOLIAN static void
@@ -202,6 +205,7 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	// This must be added to have widget hierarchy (parent)
 	elm_widget_sub_object_parent_add(obj);
 	ELM_WIDGET_DATA_GET_OR_RETURN(obj, wd, );
+	pd->edje_obj = wd->resize_obj;
 	//Since we are deriving from Elm.widget,
 	// our resize object is actually null. we actually don;t use it.
 	// But now we are deriving from Elm.layout
@@ -214,17 +218,17 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	else
 		EINA_LOG_DBG("Layout theme set to base.");
 
+	pd->editing_mode = EINA_FALSE;
 	_initialize_image(obj,pd);
 
-	Evas_Object *txtObj = evas_object_name_find(wd->resize_obj,"elm.status.text.text");
-	printf("asfgfggfdsdfsd %p", txtObj);
-	if(!pd->editing_mode)
-	//edje_object_part_swallow(wd->resize_obj,"elm.picture.selector",pd->fs);
-	edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
-
+	//Evas_Object *txtObj = evas_object_name_find(wd->resize_obj,"elm.status.text.text");
+	if(!pd->editing_mode){
+		//edje_object_part_swallow(wd->resize_obj,"elm.picture.selector",pd->fs);
+		edje_object_part_swallow(wd->resize_obj,"elm.picture.image",pd->icon);
+	}
 	_initialize_entry(obj, pd);
 	edje_object_part_swallow(wd->resize_obj,"elm.status.text.entry",pd->entry);
-	edje_object_signal_callback_add(wd->resize_obj, "elm,action,click", "*",_status_clicked_cb, pd);
+	elm_layout_signal_callback_add(obj, "mouse,clicked,*", "elm.status.text.text", _status_clicked_cb, pd);
 	evas_object_size_hint_align_set(pd->icon, EVAS_HINT_FILL,
 			EVAS_HINT_FILL);
 	evas_object_size_hint_weight_set(pd->icon, EVAS_HINT_EXPAND,
@@ -236,35 +240,21 @@ _elm_status_evas_object_smart_add(Eo *obj, Elm_Status_Data *pd)
 	EOLIAN static void
 _elm_status_evas_object_smart_del(Eo *obj, Elm_Status_Data *pd)
 {
-	EINA_LOG_WARN(__func__);
+	EINA_LOG_DBG(__func__);
 	evas_obj_smart_del(eo_super(obj, ELM_STATUS_CLASS));
-}
-
-	EOLIAN static Eina_Bool
-_elm_status_elm_widget_event(Eo *obj, Elm_Status_Data *pd, Evas_Object *source, Evas_Callback_Type type, void *event_info)
-{
-
-	EINA_LOG_WARN(__func__);
-}
-
-	EOLIAN static Eina_Bool
-_elm_status_elm_widget_theme_apply(Eo *obj, Elm_Status_Data *pd)
-{
-
-	EINA_LOG_WARN(__func__);
 }
 
 	EOLIAN static void
 _elm_status_class_constructor(Eo_Class *klass)
 {
-	EINA_LOG_WARN(__func__);
+	EINA_LOG_DBG(__func__);
 	evas_smart_legacy_type_register(MY_CLASS_NAME_LEGACY, klass);
 }
 
 	EOLIAN static void
 _elm_status_status_set(Eo *obj, Elm_Status_Data *pd, const char *txt)
 {
-	EINA_LOG_WARN("%s", txt);
+	EINA_LOG_DBG("%s",txt);
 	if (txt)
 	{
 		if (!elm_obj_layout_text_set(obj,"elm.status.text.text", txt))
@@ -316,14 +306,14 @@ _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 	EOLIAN static MOOD
 _elm_status_mood_get(Eo *obj, Elm_Status_Data *pd)
 {
-	EINA_LOG_WARN(__func__);
+	EINA_LOG_DBG(__func__);
 	return pd->mood;
 }
 
 	EAPI Evas_Object *
 elm_status_add(Evas_Object *parent)
 {
-	EINA_LOG_WARN(__func__);
+	EINA_LOG_DBG(__func__);
 	EINA_SAFETY_ON_NULL_RETURN_VAL(parent, NULL);
 	Evas_Object *obj = eo_add(MY_CLASS, parent);
 	return obj;
@@ -332,7 +322,7 @@ elm_status_add(Evas_Object *parent)
 	EOLIAN static void
 _elm_status_visibility_set(Eo *obj, Elm_Status_Data *pd, VISIBILITY visibility)
 {
-	EINA_LOG_WARN(__func__);
+	EINA_LOG_DBG(__func__);
 	if (!elm_obj_layout_text_set(obj,"elm.visibility.text", "visibid"+visibility))
 	{
 		EINA_LOG_WARN("could not set the text. "
@@ -353,10 +343,14 @@ _elm_status_visibility_set(Eo *obj, Elm_Status_Data *pd, VISIBILITY visibility)
 	EOLIAN static VISIBILITY
 _elm_status_visibility_get(Eo *obj, Elm_Status_Data *pd)
 {
-	EINA_LOG_WARN(__func__);
+	EINA_LOG_DBG(__func__);
 	return pd->visibility;
 }
 
+/**
+ * Set picture path
+ *
+ */
 	EOLIAN static void
 _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, const char *picture)
 {
@@ -384,7 +378,7 @@ _elm_status_picture_set(Eo *obj, Elm_Status_Data *pd, const char *picture)
 	EOLIAN static const char *
 _elm_status_picture_get(Eo *obj, Elm_Status_Data *pd)
 {
-	EINA_LOG_WARN(__func__);
+	EINA_LOG_DBG(__func__);
 	return pd->picture;
 }
 

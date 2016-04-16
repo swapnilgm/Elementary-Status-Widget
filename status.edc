@@ -163,6 +163,7 @@ collections {
 							}
 						}
 					}
+//				}
 //				part {
 //					name: "elm.status.text.rect";
 //					type: RECT;
@@ -196,21 +197,35 @@ collections {
 							ellipsis: 0.01;
 						}
 					}
+					description { 
+						state: "invisible" 0.0;
+						inherit: "default" 0.0;
+						visible: 0;
+						align: 0.0 0.0;
+					 }
 					cursor_mode : BEFORE;
 					mouse_events : 1;
 				}
 				part {
 					name: "elm.status.text.entry";
 					type: SWALLOW;
-					multiline: 1;
 					description {
 						state: "default" 0.0;
 						color_class: "status.text";
+						visible : 0;
 
 						rel1.relative: 1.1 0;
 						rel1.to: "elm.status.label.text";
 						rel2.relative: 0.98 0.9;
+						
 					}
+					description { 
+						state: "visible" 0.0;
+						inherit: "default" 0.0;
+						visible: 1;
+						align: 0.0 0.0;
+					 }
+
 					mouse_events : 1;
 				}
 			} // end status border
@@ -444,8 +459,22 @@ collections {
 				}
 			}
 		}
-
-		programs {
+		programs{
+		//	program {
+	//			signal: "mouse,clicked"; source: "elm.status.text.text";
+	//			action: STATE_SET "invisible" 0.0;
+	///			target: "elm.status.text.text";
+	//		}
+	///		program {
+	//			signal: "mouse,clicked"; source: "elm.status.text.text";
+	//			action: STATE_SET "visible" 0.0;
+	//			target: "elm.status.text.entry";
+	///		}
+	///		program {
+	///			signal: "mouse,clicked"; source: "elm.status.text.text";
+	///			action: SIGNAL_EMIT "text,edit" "elm.status.text.text";
+	///		}
+			
 			program {
 				name: "mood,sad";
 				source: "";
