@@ -20,6 +20,19 @@ typedef struct {
 
 }Status_event_info;
 
+static const char *MOOD_TO_STR[] = {
+	"Happy",
+	"Sad",
+	"Excited"
+};
+
+static const char *VISIBILITY_TO_STR[] = {
+	"Online",
+	"Offline",
+	"Away"
+};
+
+
 static const char SIG_CLICKED[] = "clicked";
 static const char SIG_PICTURE_CHANGED[] = "picture,changed";
 static const char SIG_STATUS_CHANGED[] = "status,changed";

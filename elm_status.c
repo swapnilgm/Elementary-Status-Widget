@@ -300,14 +300,14 @@ _elm_status_mood_set(Eo *obj, Elm_Status_Data *pd, MOOD mood)
 		EINA_LOG_WARN("could not set the text. "
 				"Maybe part 'elm.mood.message.text' does not exist?");
 	}
-	else{
-		Status_event_info *sei = {
+	else {
+		Status_event_info sei = {
 			SIG_MOOD_CHANGED,
-			pd->mood,
-			mood,
+			&pd->mood,
+			&mood,
 			"elm.mood.message.text"
 		};
-		evas_object_smart_callback_call(obj,SIG_MOOD_CHANGED, sei);
+		evas_object_smart_callback_call(obj,SIG_MOOD_CHANGED, &sei);
 		pd->mood = mood;
 	}
 }

@@ -20,11 +20,17 @@ _status_changed_cb(void *data, Evas_Object *obj,void *event_info)
 _mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	printf("mood changed callback\n");
-	Status_event_info *sei = event_info;
-	printf("even_name :: %s",sei->event_name);
-		printf("Priv status ::%s", sei->priv_data);
-		printf("New status ::%s", sei->new_data);
-		printf("Part::%s", sei->part_name);
+	if (event_info == NULL) {
+		printf("event_info is NULL\nReturning..\n");
+		return;
+	}
+	printf("event_info is not NULL\n");
+	printf("event_info: %p\n", event_info);
+	Status_event_info *sei = (Status_event_info*)event_info;
+	printf("even_name :: %s\n",sei->event_name);
+	printf("Priv status ::%s", MOOD_TO_STR[*(MOOD*)sei->priv_data]);
+	printf("New status ::%s", VISIBILITY_TO_STR[*(VISIBILITY*)sei->new_data]);
+	printf("Part::%s", sei->part_name);
 }
 
 	static void
