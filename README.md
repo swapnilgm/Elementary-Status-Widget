@@ -16,6 +16,7 @@ make
 ./status
 ```
 
+## Homepage
 [GitHub](https://github.com/swapnilgm/Elementary-Status-Widget)
 
 ## License
