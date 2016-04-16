@@ -12,9 +12,9 @@ typedef struct {
 	//event name i.e signal
 	const char *event_name;
 	//previous data specific to event object just before happening of event
-	char *priv_data;
+	void *priv_data;
 	//new modifed data after execution of event
-	char *new_data;
+	void* new_data;
 	//theme part name
 	const char *part_name;
 

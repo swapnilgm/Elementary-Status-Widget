@@ -20,12 +20,11 @@ _status_changed_cb(void *data, Evas_Object *obj,void *event_info)
 _mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	printf("mood changed callback\n");
-	//	Status_event_info *sei = (Status_event_info*)event_info;
-	/*	printf("even_name :: %s",sei->event_name);
+	Status_event_info *sei = event_info;
+	printf("even_name :: %s",sei->event_name);
 		printf("Priv status ::%s", sei->priv_data);
 		printf("New status ::%s", sei->new_data);
 		printf("Part::%s", sei->part_name);
-		*/
 }
 
 	static void
@@ -52,7 +51,6 @@ _picture_changed_cb(void *data, Evas_Object *obj,void *event_info)
 		*/
 }
 
-
 	static void
 _edit_dblclick_cb(void *data, Evas_Object *obj,void *event_info)
 {
@@ -63,7 +61,6 @@ _edit_dblclick_cb(void *data, Evas_Object *obj,void *event_info)
 	elm_status_picture_set(status, "../images/Start_IT.png");
 	elm_status_visibility_set(status, VISIBILITY_OFFLINE);
 }
-
 
 
 int main(int argc, char **argv)
@@ -92,19 +89,19 @@ int main(int argc, char **argv)
 	/* initialize status widget with `win` as parent */
 	Evas_Object *obj = elm_status_add(win);
 
-	/* elm_status_set(obj, "Hopping for best"); */
 	elm_status_mood_set(obj, MOOD_SAD);
 	elm_status_visibility_set(obj, VISIBILITY_OFFLINE);
-	//elm_status_picture_set(obj, "../monk.png");
+	elm_status_picture_set(obj, "../images/monk.png");
 
 	/* resize and move */
-	evas_object_resize(obj, 400, 150);
+	evas_object_resize(obj, 800, 300);
 	evas_object_move(obj, 100, 100);
 
 	evas_object_smart_callback_add(obj, SIG_STATUS_CHANGED , _status_changed_cb, NULL);
 	evas_object_smart_callback_add(obj, SIG_PICTURE_CHANGED, _picture_changed_cb, NULL);
 	evas_object_smart_callback_add(obj, SIG_MOOD_CHANGED, _mood_changed_cb, NULL);
 	evas_object_smart_callback_add(obj, SIG_VISIBILITY_CHANGED, _visibility_changed_cb, NULL);
+
 	evas_object_show(obj);
 
 	/* set window size to (400,400) */
@@ -113,9 +110,10 @@ int main(int argc, char **argv)
 	/* display our window */
 	evas_object_show(win);
 
+	/* text entry */
 	Evas_Object *entry = elm_entry_add(win);
 	elm_entry_autosave_set(entry, EINA_FALSE);
-	elm_entry_file_set(entry,"/tmp/en.txt",ELM_TEXT_FORMAT_MARKUP_UTF8);
+	/* elm_entry_file_set(entry,"/tmp/en.txt",ELM_TEXT_FORMAT_MARKUP_UTF8); */
 	elm_object_text_set(entry, "Change Status");
 	evas_object_resize(entry, 400, 50);
 	evas_object_move(entry, 0, 0);
