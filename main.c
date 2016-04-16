@@ -8,50 +8,24 @@
 _status_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	EINA_LOG_WARN("called");
-	Status_event_info *sei = (Status_event_info*)event_info;
-	/* printf("even_name :: %s",sei->event_name); */
-	/* printf("Priv status ::%s", sei->priv_data); */
-	/* printf("New status ::%s", sei->new_data); */
-	/* printf("Part::%s", sei->part_name); */
 }
 
 	static void
 _mood_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	EINA_LOG_WARN("called");
-	/* if (event_info == NULL) { */
-	/* 	printf("event_info is NULL\nReturning..\n"); */
-	/* 	return; */
-	/* } */
-	/* printf("event_info is not NULL\n"); */
-	/* printf("event_info: %p\n", event_info); */
-	/* Status_event_info *sei = (Status_event_info*)event_info; */
-	/* printf("even_name :: %s\n",sei->event_name); */
-	/* printf("Priv status ::%s", MOOD_TO_STR[*(MOOD*)sei->priv_data]); */
-	/* printf("New status ::%s", VISIBILITY_TO_STR[*(VISIBILITY*)sei->new_data]); */
-	/* printf("Part::%s", sei->part_name); */
 }
 
 	static void
 _visibility_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	EINA_LOG_WARN("called");
-	/* Status_event_info *sei = (Status_event_info*)event_info; */
-	/* printf("even_name :: %s",sei->event_name); */
-	/* printf("Priv status ::%s", sei->priv_data); */
-	/* printf("New status ::%s", sei->new_data); */
-	/* printf("Part::%s", sei->part_name); */
 }
 
 	static void
 _picture_changed_cb(void *data, Evas_Object *obj,void *event_info)
 {
 	EINA_LOG_WARN("called");
-	/* Status_event_info *sei = (Status_event_info*)event_info; */
-	/* printf("even_name :: %s",sei->event_name); */
-	/* printf("Priv status ::%s", sei->priv_data); */
-	/* printf("New status ::%s", sei->new_data); */
-	/* printf("Part::%s", sei->part_name); */
 }
 
 	static void
@@ -78,7 +52,7 @@ _button_change_visibility_cb(void *data, Evas_Object *obj,void *event_info)
 	EINA_LOG_WARN("called");
 
 	Evas_Object *status = (Evas_Object*)data;
-	elm_status_visibility_set(status, VISIBILITY_OFFLINE);
+	elm_status_visibility_set(status, VISIBILITY_AWAY);
 }
 
 	static void
@@ -90,13 +64,29 @@ _button_change_picture_cb(void *data, Evas_Object *obj,void *event_info)
 	elm_status_picture_set(status, "../images/monk.png");
 }
 
+	static void
+_button_print_debug_cb(void *data, Evas_Object *obj,void *event_info)
+{
+	EINA_LOG_WARN("called");
+
+	Evas_Object *status = (Evas_Object*)data;
+	EINA_LOG_WARN("\nStatus widget dump:\n\
+		Picture path: %s\
+		Status text: %s\
+		Mood: %s\
+		Visibility: %s",
+		elm_status_picture_get(status),
+		elm_status_get(status),
+		MOOD_TO_STR[elm_status_mood_get(status)],
+		VISIBILITY_TO_STR[elm_status_visibility_get(status)]);
+}
 
 int main(int argc, char **argv)
 {
 	if (!elm_init(argc, argv))
 		return -1;
 
-	const int WIDGET_WIDTH = 500;
+	const int WIDGET_WIDTH = 600;
 	const int WIDGET_HEIGHT = 250;
 
 	/* window object */
@@ -190,6 +180,17 @@ int main(int argc, char **argv)
 	evas_object_show(button4);
 
 	/////////////////////////////////////////////////////////////
+
+	Evas_Object *button5 = elm_button_add(win);
+	elm_object_text_set(button5, "Print debug");
+	evas_object_smart_callback_add(button5,"clicked",_button_print_debug_cb,obj1);
+
+	evas_object_resize(button5, 100, 40);
+	evas_object_move(button5, 400, 0);
+	evas_object_show(button5);
+
+	/////////////////////////////////////////////////////////////
+
 	/* set window size to (400,400) */
 	evas_object_resize(win, 1000, 800);
 

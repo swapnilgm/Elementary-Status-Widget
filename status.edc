@@ -92,7 +92,7 @@ collections {
 		                        color_class: "picture.rect";
 
 					// the bottom right corner
-					rel2.relative: 0.4 1;
+					rel2.relative: 0.35 1;
 				}
 				part {
 				 	name: "elm.picture.image";
@@ -137,50 +137,23 @@ collections {
 
 					rel2.relative: 1 0.3;
 				}
-//				part {
-//					name: "elm.status.label.rect";
-//					type: RECT;
-//					description {
-//						state: "default" 0.0;
-//						color_class: "label.rect";
-//
-//						rel1.relative: 0.02 0.1;
-//						rel2.relative: 0.25 0.9;
-//					}
-//				}
-					part {
-				 		name: "elm.status.label.text";
-						type: TEXT;
-						effect: GLOW;
-						description {
-							state: "default" 0.0;
-							color_class: "header";
+				part {
+				 	name: "elm.status.label.text";
+					type: TEXT;
+					effect: GLOW;
+					description {
+						state: "default" 0.0;
+						color_class: "header";
 
-							rel1.relative: 0.02 0.1;
-							rel2.relative: 0.25 0.9;
-							text {
-								text: "Status:";
-								fit: 1 1;
-								min: 1 1;
-								size: 20;
-								align: 0 0.5;
-								ellipsis: 0.01;
-							}
+						rel1.relative: 0.02 0.1;
+						rel2.relative: 0.3 0.9;
+						text {
+							text: "Status:";
+							size: 22;
+							align: 0 0.5;
 						}
 					}
-//				part {
-//					name: "elm.status.text.rect";
-//					type: RECT;
-//					description {
-//						state: "default" 0.0;
-//						color_class: "label.rect";
-//
-//						rel1.relative: 1.1 0;
-//						rel1.to: "elm.status.label.rect";
-//
-//						rel2.relative: 0.98 0.9;
-//	                    		}
-//				}
+				}
 				part {
 					name: "elm.status.text.text";
 					type: TEXT;
@@ -193,12 +166,9 @@ collections {
 						rel1.to: "elm.status.label.text";
 						rel2.relative: 0.98 0.9;
 						text {
-							text: "up late... doing my CS630A project";
-							fit: 1 1;
-							min: 1 1;
+							text: "Coding";
 							size: 20;
 							align: 0 0.5;
-							ellipsis: 0.01;
 						}
 					}
 					description {
@@ -208,30 +178,6 @@ collections {
 						align: 0.0 0.0;
 					 }
 					cursor_mode : BEFORE;
-					mouse_events : 1;
-				}
-				part {
-					name: "elm.status.text.entry";
-					type: SWALLOW;
-					description {
-						state: "default" 0.0;
-						color_class: "status.entry";
-						visible : 0;
-
-						rel1.relative: 1.1 0;
-						rel1.to: "elm.status.label.text";
-						rel2.relative: 0.98 0.9;
-
-					}
-					description {
-						state: "visible" 0.0;
-						inherit: "default" 0.0;
-
-						color_class: "status.entry";
-						visible: 1;
-						align: 0.0 0.0;
-					 }
-
 					mouse_events : 1;
 				}
 			} // end status border
@@ -248,17 +194,6 @@ collections {
 					rel2.relative: 1 2;
 					rel.to: "elm.status.rect";
 				}
-//				part {
-//					name: "elm.mood.label.rect";
-//					type: RECT;
-//					description {
-//						state: "default" 0.0;
-//						color_class: "label.rect";
-//
-//						rel1.relative: 0.02 0.1;
-//						rel2.relative: 0.25 0.9;
-//					}
-//				}
 				part {
 				 	name: "elm.mood.label.text";
 					type: TEXT;
@@ -268,30 +203,14 @@ collections {
 						color_class: "header";
 
 						rel1.relative: 0.02 0.1;
-						rel2.relative: 0.25 0.9;
+						rel2.relative: 0.28 0.9;
 						text {
 							text: "Mood:";
-							fit: 1 1;
-							min: 1 1;
-							size: 20;
+							size: 22;
 							align: 0 0.5;
-							ellipsis: 0.01;
 						}
 					}
 				}
-//				part {
-//					name: "elm.mood.message.rect";
-//					type: RECT;
-//					description {
-//						state: "default" 0.0;
-//						color_class: "label.rect";
-//
-//						rel1.relative: 1.1 0;
-//						rel1.to: "elm.mood.label.rect";
-//
-//						rel2.relative: 0.8 0.9;
-//	                    		}
-//				}
 				part {
 					name: "elm.mood.message.text";
 					type: TEXT;
@@ -304,12 +223,9 @@ collections {
 						rel2.relative: 0.8 0.9;
 
 						text {
-							text: "annoyed like hell";
-							fit: 1 1;
-							min: 1 1;
+							text: "Sad";
 							size: 20;
 							align: 0 0.5;
-							ellipsis: 0.01;
 						}
 					}
 				}
@@ -426,16 +342,13 @@ collections {
 						state: "default" 0.0;
 						color_class: "visibility.text.green";
 
-						rel1.relative: 1.05 0;
+						rel1.relative: 1 0;
 						rel1.to: "elm.visibility.icon.rect";
 
 						text {
-							text: "Unknown status";
-							fit: 1 1;
-							min: 1 1;
-							size: 20;
+							text: "Online";
+							size: 30;
 							align: 0 0.5;
-							ellipsis: 0.01;
 						}
 					}
 					description {
