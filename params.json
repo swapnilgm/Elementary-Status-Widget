@@ -1,6 +1,6 @@
 {
   "name": "Elementary-status-widget",
   "tagline": "Status Widget for Elementary over EFL lib.",
-  "body": "# Elementary-Status-Widget\r\n",
+  "body": "# Elementary-Status-Widget\r\n## HOW-TO Build\r\nYou'll need EFL and Elementary devel packages. \r\nAfter installation and `git clone`, follow these steps:\r\n```\r\n# in the project directory\r\nmkdir build\r\ncd build\r\ncmake ..\r\nmake\r\n```\r\n\r\n## Test using demo app\r\n```\r\n# in the build directory\r\n./status\r\n```\r\n\r\n## Homepage\r\n[GitHub](https://github.com/swapnilgm/Elementary-Status-Widget)\r\n\r\n## License\r\nGPLv2\r\n\r\n",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
